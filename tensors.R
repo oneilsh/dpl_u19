@@ -94,7 +94,7 @@ print(tensor_rank1[4])                         # 6
   image %>% tt() %>% print(max_per_level = 3)
   
   reshaped <- array_reshape(image, dim = c(3, 8))
-  reshaped %>% tt()
+  reshaped %>% tt() %>% print(max_per_level = 3, end_n = 8)
 }
 
 {
@@ -106,7 +106,7 @@ print(tensor_rank1[4])                         # 6
   validate_images <- mnist$test$x
   validate_labels <- mnist$test$y
   
-  train_images %>% tt()
+  train_images %>% tt() %>% print(end_n = 28)
   train_labels %>% tt()
   
   validate_images %>% tt()
