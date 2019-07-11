@@ -29,8 +29,8 @@ print(tensor_rank1[4])                         # 6
 
 {
   # rank-5 tensor, shape (3, 2, 3, 4, 5)
-  t_rankt <- array(0, dim = c(3, 2, 3, 4, 5))
-  print(t_rankt[3, 2, 2, 4, 2])
+  t_rank5 <- array(0, dim = c(3, 2, 3, 4, 5))
+  print(t_rank5[3, 2, 2, 4, 2])
 }
 
 {
