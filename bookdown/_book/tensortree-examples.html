@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="2 Tensortree Examples | Deep Learning for Life Scientists" />
+<meta property="og:type" content="book" />
+
+
+
+
+
+<meta name="author" content="Shawn T. O’Neil" />
+
+<meta name="date" content="2019-01-01" />
+
+
+<meta name="description" content="2 Tensortree Examples | Deep Learning for Life Scientists">
+
+<title>2 Tensortree Examples | Deep Learning for Life Scientists</title>
+
+<link href="libs/tufte-css-2015.12.29/tufte-fonts.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/tufte-background.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/tufte-italics.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="tufte_mods.css" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul>
+<li class="has-sub"><a href="r-background.html#r-background"><span class="toc-section-number">1</span> R Background</a><ul>
+<li><a href="r-background.html#vectors"><span class="toc-section-number">1.1</span> Vectors</a></li>
+<li><a href="r-background.html#matrices-arrays"><span class="toc-section-number">1.2</span> Matrices &amp; Arrays</a></li>
+<li><a href="r-background.html#named-matrices-arrays"><span class="toc-section-number">1.3</span> Named Matrices &amp; Arrays</a></li>
+<li><a href="r-background.html#lists"><span class="toc-section-number">1.4</span> Lists</a></li>
+<li><a href="r-background.html#data-frames"><span class="toc-section-number">1.5</span> Data Frames</a></li>
+<li><a href="r-background.html#for-loops"><span class="toc-section-number">1.6</span> For-loops</a></li>
+<li><a href="r-background.html#functions"><span class="toc-section-number">1.7</span> Functions</a></li>
+<li><a href="r-background.html#higher-order-functions"><span class="toc-section-number">1.8</span> Higher-Order Functions</a></li>
+<li><a href="r-background.html#ggplot2"><span class="toc-section-number">1.9</span> ggplot2</a></li>
+<li><a href="r-background.html#the-operator"><span class="toc-section-number">1.10</span> The <code>%&gt;%</code> operator</a></li>
+</ul></li>
+<li class="has-sub"><a href="tensortree-examples.html#tensortree-examples"><span class="toc-section-number">2</span> Tensortree Examples</a><ul>
+<li><a href="tensortree-examples.html#printing-binding-permuting"><span class="toc-section-number">2.1</span> Printing, Binding, Permuting</a></li>
+<li><a href="tensortree-examples.html#rank-names"><span class="toc-section-number">2.2</span> Rank Names</a></li>
+<li><a href="tensortree-examples.html#data-frames-and-plotting"><span class="toc-section-number">2.3</span> Data Frames and Plotting</a></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="tensortree-examples" class="section level1">
+<h1><span class="header-section-number">2</span> Tensortree Examples</h1>
+<div id="printing-binding-permuting" class="section level2">
+<h2><span class="header-section-number">2.1</span> Printing, Binding, Permuting</h2>
+<p>We’ve seen that the <code>tensortree</code> package can help illuminate tensors via custom printouts, for example in exploring the <code>mnist</code> dataset.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(keras)
+<span class="kw">library</span>(tensortree)
+
+mnist &lt;-<span class="st"> </span><span class="kw">dataset_mnist</span>()   <span class="co"># load mnist dataset</span>
+
+train_images &lt;-<span class="st"> </span>mnist<span class="op">$</span>train<span class="op">$</span>x
+train_labels &lt;-<span class="st"> </span>mnist<span class="op">$</span>train<span class="op">$</span>y</code></pre>
+<p>To start with, we need to add some metadata to the tensors by converting them with <code>as.tensortree()</code> or <code>tt()</code> for short:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">tt</span>(train_images))</code></pre>
+<pre><code>## Rank 3 tensor, shape: (60000, 28, 28)
+##   # tensor [1, , ] shape: (28, 28)
+##          0     0     0     0     0     0  ... 
+##          0     0     0     0     0     0  ... 
+##          0     0     0     0     0     0  ... 
+##          0     0     0     0     0     0  ... 
+##          0     0     0     0     0     0  ... 
+##          0     0     0     0     0     0  ... 
+##       ...   ...   ...   ...   ...   ...   ... 
+##   # tensor [2, , ] shape: (28, 28)
+##          0     0     0     0     0     0  ... 
+##          0     0     0     0     0     0  ... 
+##          0     0     0     0     0     0  ... 
+##          0     0     0     0     0     0  ... 
+##          0     0     0     0     0     0  ... 
+##          0     0     0     0     0     0  ... 
+##       ...   ...   ...   ...   ...   ...   ... 
+##   ... truncating 59998  entries.</code></pre>
+<p>Using <code>%&gt;%</code> syntax, the above would be <code>train_images %&gt;% tt() %&gt;% print()</code>. The <code>print()</code> function can take a variety of parameters, for example the number of entries to show for the last 1, 2, or 3 ranks (default = 6). Let’s see 16 x 16 chunks of our images:</p>
+<pre class="sourceCode r"><code class="sourceCode r">train_images <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tt</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">print</span>(<span class="dt">end_n =</span> <span class="dv">16</span>)</code></pre>
+<pre><code>## Rank 3 tensor, shape: (60000, 28, 28)
+##   # tensor [1, , ] shape: (28, 28)
+##          0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0  ... 
+##          0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0  ... 
+##          0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0  ... 
+##          0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0  ... 
+##          0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0  ... 
+##          0     0     0     0     0     0     0     0     0     0     0     0     3    18    18    18  ... 
+##          0     0     0     0     0     0     0     0    30    36    94   154   170   253   253   253  ... 
+##          0     0     0     0     0     0     0    49   238   253   253   253   253   253   253   253  ... 
+##          0     0     0     0     0     0     0    18   219   253   253   253   253   253   198   182  ... 
+##          0     0     0     0     0     0     0     0    80   156   107   253   253   205    11     0  ... 
+##          0     0     0     0     0     0     0     0     0    14     1   154   253    90     0     0  ... 
+##          0     0     0     0     0     0     0     0     0     0     0   139   253   190     2     0  ... 
+##          0     0     0     0     0     0     0     0     0     0     0    11   190   253    70     0  ... 
+##          0     0     0     0     0     0     0     0     0     0     0     0    35   241   225   160  ... 
+##          0     0     0     0     0     0     0     0     0     0     0     0     0    81   240   253  ... 
+##          0     0     0     0     0     0     0     0     0     0     0     0     0     0    45   186  ... 
+##       ...   ...   ...   ...   ...   ...   ...   ...   ...   ...   ...   ...   ...   ...   ...   ...   ... 
+##   # tensor [2, , ] shape: (28, 28)
+##          0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0  ... 
+##          0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0  ... 
+##          0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0  ... 
+##          0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0  ... 
+##          0     0     0     0     0     0     0     0     0     0     0     0     0     0     0    51  ... 
+##          0     0     0     0     0     0     0     0     0     0     0     0     0     0    48   238  ... 
+##          0     0     0     0     0     0     0     0     0     0     0     0     0    54   227   253  ... 
+##          0     0     0     0     0     0     0     0     0     0     0    10    60   224   252   253  ... 
+##          0     0     0     0     0     0     0     0     0     0     0   163   252   252   252   253  ... 
+##          0     0     0     0     0     0     0     0     0     0    51   238   253   253   190   114  ... 
+##          0     0     0     0     0     0     0     0     0    48   238   252   252   179    12    75  ... 
+##          0     0     0     0     0     0     0     0    38   165   253   233   208    84     0     0  ... 
+##          0     0     0     0     0     0     0     7   178   252   240    71    19    28     0     0  ... 
+##          0     0     0     0     0     0     0    57   252   252    63     0     0     0     0     0  ... 
+##          0     0     0     0     0     0     0   198   253   190     0     0     0     0     0     0  ... 
+##          0     0     0     0     0     0    76   246   252   112     0     0     0     0     0     0  ... 
+##       ...   ...   ...   ...   ...   ...   ...   ...   ...   ...   ...   ...   ...   ...   ...   ...   ... 
+##   ... truncating 59998  entries.</code></pre>
+<p>And we can adjust how many entries to show per level above that, here to just show one:</p>
+<pre class="sourceCode r"><code class="sourceCode r">train_images <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tt</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">print</span>(<span class="dt">end_n =</span> <span class="dv">16</span>, <span class="dt">max_per_level =</span> <span class="dv">1</span>)</code></pre>
+<pre><code>## Rank 3 tensor, shape: (60000, 28, 28)
+##   # tensor [1, , ] shape: (28, 28)
+##          0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0  ... 
+##          0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0  ... 
+##          0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0  ... 
+##          0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0  ... 
+##          0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0  ... 
+##          0     0     0     0     0     0     0     0     0     0     0     0     3    18    18    18  ... 
+##          0     0     0     0     0     0     0     0    30    36    94   154   170   253   253   253  ... 
+##          0     0     0     0     0     0     0    49   238   253   253   253   253   253   253   253  ... 
+##          0     0     0     0     0     0     0    18   219   253   253   253   253   253   198   182  ... 
+##          0     0     0     0     0     0     0     0    80   156   107   253   253   205    11     0  ... 
+##          0     0     0     0     0     0     0     0     0    14     1   154   253    90     0     0  ... 
+##          0     0     0     0     0     0     0     0     0     0     0   139   253   190     2     0  ... 
+##          0     0     0     0     0     0     0     0     0     0     0    11   190   253    70     0  ... 
+##          0     0     0     0     0     0     0     0     0     0     0     0    35   241   225   160  ... 
+##          0     0     0     0     0     0     0     0     0     0     0     0     0    81   240   253  ... 
+##          0     0     0     0     0     0     0     0     0     0     0     0     0     0    45   186  ... 
+##       ...   ...   ...   ...   ...   ...   ...   ...   ...   ...   ...   ...   ...   ...   ...   ...   ... 
+##   ... truncating 59999  entries.</code></pre>
+<p>Let’s play with some other data by using <code>keras</code>’ <code>image_load()</code> and <code>image_to_array()</code> function to read two JPG files into tensors.</p>
+<p><img src="images/strawberry.jpg" width = "30%"/ style="padding-right: 10%; padding-left: 5%"> <img src="images/apple.jpg" width="30%"/></p>
+<p>For ease of visualization we’re going to scale them to just 10x10, and for now we’ll format them with <code>channels_first</code>, resulting in rank-3 tensors with shape <code>(3, 10, 10)</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># read raw image data,</span>
+<span class="co"># convert to tensor with a &#39;channels-first&#39; representation</span>
+<span class="co"># and convert to tt() </span>
+strawberry &lt;-<span class="st"> </span><span class="kw">image_load</span>(<span class="st">&quot;images/strawberry.jpg&quot;</span>, <span class="dt">target_size =</span> <span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">10</span>)) <span class="op">%&gt;%</span>
+<span class="st">              </span><span class="kw">image_to_array</span>(<span class="dt">data_format =</span> <span class="st">&quot;channels_first&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">              </span><span class="kw">tt</span>()
+
+apple &lt;-<span class="st"> </span><span class="kw">image_load</span>(<span class="st">&quot;images/apple.jpg&quot;</span>, <span class="dt">target_size =</span> <span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">10</span>)) <span class="op">%&gt;%</span>
+<span class="st">         </span><span class="kw">image_to_array</span>(<span class="dt">data_format =</span> <span class="st">&quot;channels_first&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">         </span><span class="kw">tt</span>()
+
+
+apple <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">print</span>(<span class="dt">max_per_level =</span> <span class="dv">3</span>)</code></pre>
+<pre><code>## Rank 3 tensor, shape: (3, 10, 10)
+##   # tensor [1, , ] shape: (10, 10)
+##        255   255   255   255   255   250  ... 
+##        255   255   255   254   255   136  ... 
+##        255   255   255   250   149   112  ... 
+##        255   255   203   182   134   106  ... 
+##        255   255   239   255   177   161  ... 
+##        255   251   220   217   165   167  ... 
+##       ...   ...   ...   ...   ...   ...   ... 
+##   # tensor [2, , ] shape: (10, 10)
+##        255   255   255   255   255   252  ... 
+##        255   255   255   254   255   171  ... 
+##        255   255   255   224    21    27  ... 
+##        255   255    20    33    18     6  ... 
+##        255   252    97   186    24    14  ... 
+##        255   245    23    57     9    14  ... 
+##       ...   ...   ...   ...   ...   ...   ... 
+##   # tensor [3, , ] shape: (10, 10)
+##        255   255   255   255   255   247  ... 
+##        255   255   255   244   255    45  ... 
+##        255   255   255   225    18    30  ... 
+##        255   255    24    39    27    16  ... 
+##        255   253    85   181    27    24  ... 
+##        255   245    15    45    10    19  ... 
+##       ...   ...   ...   ...   ...   ...   ...</code></pre>
+<p>We can ‘bind’ tensors together to create a new tensor of higher rank; in this case a <code>(3, 10, 10)</code> tensor bound to a <code>(3, 10, 10)</code>
+tensor will result in a <code>(2, 3, 10, 10)</code> tensor (images, channels, rows, columns).<label for="tufte-sn-5" class="margin-toggle sidenote-number">5</label><input type="checkbox" id="tufte-sn-5" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">5</span> This function is a thin wrapper around <code>abind()</code> from the <code>abind</code> package.</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">images &lt;-<span class="st"> </span><span class="kw">bind</span>(apple, strawberry)
+
+images</code></pre>
+<pre><code>## Rank 4 tensor, shape: (2, 3, 10, 10)
+##   # tensor [1, , , ] shape: (3, 10, 10)
+##     # tensor [1, 1, , ] shape: (10, 10)
+##          255   255   255   255   255   250  ... 
+##          255   255   255   254   255   136  ... 
+##          255   255   255   250   149   112  ... 
+##          255   255   203   182   134   106  ... 
+##          255   255   239   255   177   161  ... 
+##          255   251   220   217   165   167  ... 
+##         ...   ...   ...   ...   ...   ...   ... 
+##     # tensor [1, 2, , ] shape: (10, 10)
+##          255   255   255   255   255   252  ... 
+##          255   255   255   254   255   171  ... 
+##          255   255   255   224    21    27  ... 
+##          255   255    20    33    18     6  ... 
+##          255   252    97   186    24    14  ... 
+##          255   245    23    57     9    14  ... 
+##         ...   ...   ...   ...   ...   ...   ... 
+##     ... truncating 1  entries.
+##   # tensor [2, , , ] shape: (3, 10, 10)
+##     # tensor [2, 1, , ] shape: (10, 10)
+##          255   255   255   255   255   255  ... 
+##          253   253   253   253   253   253  ... 
+##          253   210   216   230   253   253  ... 
+##          253   175   145   220   230   253  ... 
+##          253   178   255   199   190   218  ... 
+##          253   232   199   118   195   207  ... 
+##         ...   ...   ...   ...   ...   ...   ... 
+##     # tensor [2, 2, , ] shape: (10, 10)
+##          255   255   255   255   255   255  ... 
+##          253   253   253   253   253   253  ... 
+##          253   104    50    33   253   253  ... 
+##          253   188   151    31   112   253  ... 
+##          253    61   170    28    20    58  ... 
+##          253   226    94    16    49    38  ... 
+##         ...   ...   ...   ...   ...   ...   ... 
+##     ... truncating 1  entries.</code></pre>
+<p>We can permute the ranks of a tensortree if we wish, for example to convert our channels-first tensor into a channels-last tensor (shape <code>(2, 10, 10, 3)</code>).<label for="tufte-sn-6" class="margin-toggle sidenote-number">6</label><input type="checkbox" id="tufte-sn-6" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">6</span> This is a fairly thin wrapper around the base-R function <code>aperm()</code>.</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">images_channels_last &lt;-<span class="st"> </span>images <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">permute</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">2</span>))</code></pre>
+<p>If the last rank of a tensor is of size 3, the printout assumes the tensor represents a color channels-last image, and so prints the last three ranks in “3d”, where the channel values are shown as embedded vectors:</p>
+<pre class="sourceCode r"><code class="sourceCode r">images_channels_last <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">print</span>()</code></pre>
+<pre><code>## Rank 4 tensor, shape: (2, 10, 10, 3)
+##   # tensor [1, , , ] shape: (10, 10, 3)
+##       [255, 255, 255]  [255, 255, 255]  [255, 255, 255]  [255, 255, 255]  [255, 255, 255]  [250, 252, 247]  ... 
+##       [255, 255, 255]  [255, 255, 255]  [255, 255, 255]  [254, 254, 244]  [255, 255, 255]   [136, 171, 45]  ... 
+##       [255, 255, 255]  [255, 255, 255]  [255, 255, 255]  [250, 224, 225]    [149, 21, 18]    [112, 27, 30]  ... 
+##       [255, 255, 255]  [255, 255, 255]    [203, 20, 24]    [182, 33, 39]    [134, 18, 27]     [106, 6, 16]  ... 
+##       [255, 255, 255]  [255, 252, 253]    [239, 97, 85]  [255, 186, 181]    [177, 24, 27]    [161, 14, 24]  ... 
+##       [255, 255, 255]  [251, 245, 245]    [220, 23, 15]    [217, 57, 45]     [165, 9, 10]    [167, 14, 19]  ... 
+##                  ...              ...              ...              ...              ...              ...   ... 
+##   # tensor [2, , , ] shape: (10, 10, 3)
+##       [255, 255, 255]  [255, 255, 255]  [255, 255, 255]  [255, 255, 255]  [255, 255, 255]  [255, 255, 255]  ... 
+##       [253, 253, 253]  [253, 253, 253]  [253, 253, 253]  [253, 253, 253]  [253, 253, 253]  [253, 253, 253]  ... 
+##       [253, 253, 253]   [210, 104, 88]    [216, 50, 26]    [230, 33, 17]  [253, 253, 253]  [253, 253, 253]  ... 
+##       [253, 253, 253]  [175, 188, 118]   [145, 151, 53]    [220, 31, 11]  [230, 112, 108]  [253, 253, 253]  ... 
+##       [253, 253, 253]    [178, 61, 28]  [255, 170, 160]     [199, 28, 0]     [190, 20, 3]    [218, 58, 32]  ... 
+##       [253, 253, 253]  [232, 226, 226]    [199, 94, 91]     [118, 16, 1]    [195, 49, 12]    [207, 38, 19]  ... 
+##                  ...              ...              ...              ...              ...              ...   ...</code></pre>
+<p>The <code>print()</code> function for tensortrees attemtps to guess whether the bottom ranks should be displayed as <code>&quot;3d&quot;</code> (as seen here), <code>&quot;2d&quot;</code> (earlier), or <code>&quot;1d&quot;</code>. This can be set explictly by setting the <code>bottom =</code> parameter to one of these 3.</p>
+<pre class="sourceCode r"><code class="sourceCode r">images_channels_last <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">print</span>(<span class="dt">end_n =</span> <span class="dv">5</span>, <span class="dt">bottom =</span> <span class="st">&quot;1d&quot;</span>)</code></pre>
+<pre><code>## Rank 4 tensor, shape: (2, 10, 10, 3)
+##   # tensor [1, , , ] shape: (10, 10, 3)
+##     # tensor [1, 1, , ] shape: (10, 3)
+##       # tensor [1, 1, 1, ] shape: (3)
+##                   255 255 255
+##       # tensor [1, 1, 2, ] shape: (3)
+##                   255 255 255
+##       ... truncating 8  entries.
+##     # tensor [1, 2, , ] shape: (10, 3)
+##       # tensor [1, 2, 1, ] shape: (3)
+##                   255 255 255
+##       # tensor [1, 2, 2, ] shape: (3)
+##                   255 255 255
+##       ... truncating 8  entries.
+##     ... truncating 8  entries.
+##   # tensor [2, , , ] shape: (10, 10, 3)
+##     # tensor [2, 1, , ] shape: (10, 3)
+##       # tensor [2, 1, 1, ] shape: (3)
+##                   255 255 255
+##       # tensor [2, 1, 2, ] shape: (3)
+##                   255 255 255
+##       ... truncating 8  entries.
+##     # tensor [2, 2, , ] shape: (10, 3)
+##       # tensor [2, 2, 1, ] shape: (3)
+##                   253 253 253
+##       # tensor [2, 2, 2, ] shape: (3)
+##                   253 253 253
+##       ... truncating 8  entries.
+##     ... truncating 8  entries.</code></pre>
+</div>
+<div id="rank-names" class="section level2">
+<h2><span class="header-section-number">2.2</span> Rank Names</h2>
+<p>Normal R arrays and matrices can accept “dimnames” - names for each entry of every dimension. For example, we may have a 3 by 4 matrix encoding four peoples’ favorite colors, stored as red, green, and blue values.</p>
+<pre class="sourceCode r"><code class="sourceCode r">fav_colors &lt;-<span class="st"> </span><span class="kw">array_reshape</span>(<span class="kw">runif</span>(<span class="dv">12</span>, <span class="dt">min =</span> <span class="dv">0</span>, <span class="dt">max =</span> <span class="dv">1</span>),
+                            <span class="dt">dim =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>))
+
+<span class="kw">dimnames</span>(fav_colors) &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="kw">c</span>(<span class="st">&quot;r&quot;</span>, <span class="st">&quot;g&quot;</span>, <span class="st">&quot;b&quot;</span>),
+                             <span class="kw">c</span>(<span class="st">&quot;p1&quot;</span>, <span class="st">&quot;p2&quot;</span>, <span class="st">&quot;p3&quot;</span>, <span class="st">&quot;p4&quot;</span>))
+
+<span class="kw">print</span>(fav_colors)</code></pre>
+<pre><code>##          p1        p2        p3          p4
+## r 0.8234901 0.8872930 0.1592343 0.008803542
+## g 0.9576468 0.8605311 0.7181957 0.666020740
+## b 0.2107869 0.9183568 0.5836446 0.702826136</code></pre>
+<p>Tensortrees an print these dimension names if the <code>show_names = TRUE</code> option is set.</p>
+<pre class="sourceCode r"><code class="sourceCode r">fav_colors <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tt</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">print</span>(<span class="dt">show_names =</span> <span class="ot">TRUE</span>, <span class="dt">bottom =</span> <span class="st">&quot;2d&quot;</span>)</code></pre>
+<pre><code>## Rank 2 tensor, shape: (3, 4)
+##              [,&quot;p1&quot;]   [,&quot;p2&quot;]   [,&quot;p3&quot;]   [,&quot;p4&quot;]
+##     [&quot;r&quot;,]    0.8235    0.8873    0.1592  0.008804
+##     [&quot;g&quot;,]    0.9576    0.8605    0.7182     0.666
+##     [&quot;b&quot;,]    0.2108    0.9184    0.5836    0.7028</code></pre>
+<p>Another handy feature added to tensortrees is the ability to name the ranks themselves. Let’s set the ranknames for this tensor to <code>&quot;channels&quot;</code> and <code>&quot;people&quot;</code>. This gives us an extra bit of information in the printout indicated that rows represents channels, and columns represent people.</p>
+<pre class="sourceCode r"><code class="sourceCode r">fav_colors <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tt</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">set_ranknames</span>(<span class="kw">c</span>(<span class="st">&quot;channels&quot;</span>, <span class="st">&quot;people&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">print</span>(<span class="dt">show_names =</span> <span class="ot">TRUE</span>, <span class="dt">bottom =</span> <span class="st">&quot;2d&quot;</span>)</code></pre>
+<pre><code>## Rank 2 tensor, shape: (3, 4), rank names: channels, people
+##   # channels, people
+##              [,&quot;p1&quot;]   [,&quot;p2&quot;]   [,&quot;p3&quot;]   [,&quot;p4&quot;]
+##     [&quot;r&quot;,]    0.8235    0.8873    0.1592  0.008804
+##     [&quot;g&quot;,]    0.9576    0.8605    0.7182     0.666
+##     [&quot;b&quot;,]    0.2108    0.9184    0.5836    0.7028</code></pre>
+<p>Same thing, but without <code>show_names = TRUE</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">fav_colors <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tt</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">set_ranknames</span>(<span class="kw">c</span>(<span class="st">&quot;channels&quot;</span>, <span class="st">&quot;people&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">print</span>(<span class="dt">bottom =</span> <span class="st">&quot;2d&quot;</span>)</code></pre>
+<pre><code>## Rank 2 tensor, shape: (3, 4), rank names: channels, people
+##   # channels, people
+##     0.8235    0.8873    0.1592  0.008804
+##     0.9576    0.8605    0.7182     0.666
+##     0.2108    0.9184    0.5836    0.7028</code></pre>
+<p>Now let’s return to our original apple and strawberry image data, which was channels-first with a shape of <code>(2, 3, 10, 10)</code>. Let’s process this tensor into one with ranknames set, permuted to a channels-last representation (which we can do by ranknames if they are set), and lastly set the dimension names for just the ‘channels’ rank.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># images is already a tensortree, so no need to run through tt()</span>
+images_annotated &lt;-<span class="st"> </span>images <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">set_ranknames</span>(<span class="kw">c</span>(<span class="st">&quot;images&quot;</span>, <span class="st">&quot;channels&quot;</span>, <span class="st">&quot;rows&quot;</span>, <span class="st">&quot;cols&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">permute</span>(<span class="kw">c</span>(<span class="st">&quot;images&quot;</span>, <span class="st">&quot;rows&quot;</span>, <span class="st">&quot;cols&quot;</span>, <span class="st">&quot;channels&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">set_dimnames_for_rank</span>(<span class="st">&quot;channels&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;r&quot;</span>, <span class="st">&quot;g&quot;</span>, <span class="st">&quot;b&quot;</span>))
+
+<span class="kw">print</span>(images_annotated)    <span class="co"># Shawn </span><span class="al">TODO</span><span class="co">: show_names = T here produces a bug</span></code></pre>
+<pre><code>## Rank 4 tensor, shape: (2, 10, 10, 3), rank names: images, rows, cols, channels
+##   # images [1, , , ] shape: (10, 10, 3)
+##     # rows, cols, channels
+##       [255, 255, 255]  [255, 255, 255]  [255, 255, 255]  [255, 255, 255]  [255, 255, 255]  [250, 252, 247]  ... 
+##       [255, 255, 255]  [255, 255, 255]  [255, 255, 255]  [254, 254, 244]  [255, 255, 255]   [136, 171, 45]  ... 
+##       [255, 255, 255]  [255, 255, 255]  [255, 255, 255]  [250, 224, 225]    [149, 21, 18]    [112, 27, 30]  ... 
+##       [255, 255, 255]  [255, 255, 255]    [203, 20, 24]    [182, 33, 39]    [134, 18, 27]     [106, 6, 16]  ... 
+##       [255, 255, 255]  [255, 252, 253]    [239, 97, 85]  [255, 186, 181]    [177, 24, 27]    [161, 14, 24]  ... 
+##       [255, 255, 255]  [251, 245, 245]    [220, 23, 15]    [217, 57, 45]     [165, 9, 10]    [167, 14, 19]  ... 
+##                  ...              ...              ...              ...              ...              ...   ... 
+##   # images [2, , , ] shape: (10, 10, 3)
+##     # rows, cols, channels
+##       [255, 255, 255]  [255, 255, 255]  [255, 255, 255]  [255, 255, 255]  [255, 255, 255]  [255, 255, 255]  ... 
+##       [253, 253, 253]  [253, 253, 253]  [253, 253, 253]  [253, 253, 253]  [253, 253, 253]  [253, 253, 253]  ... 
+##       [253, 253, 253]   [210, 104, 88]    [216, 50, 26]    [230, 33, 17]  [253, 253, 253]  [253, 253, 253]  ... 
+##       [253, 253, 253]  [175, 188, 118]   [145, 151, 53]    [220, 31, 11]  [230, 112, 108]  [253, 253, 253]  ... 
+##       [253, 253, 253]    [178, 61, 28]  [255, 170, 160]     [199, 28, 0]     [190, 20, 3]    [218, 58, 32]  ... 
+##       [253, 253, 253]  [232, 226, 226]    [199, 94, 91]     [118, 16, 1]    [195, 49, 12]    [207, 38, 19]  ... 
+##                  ...              ...              ...              ...              ...              ...   ...</code></pre>
+<p>There’s a bug in attempting to show the dimension names for the channels rank, but having this rank’s entries named <code>&quot;r&quot;</code>, <code>&quot;g&quot;</code>, and <code>&quot;b&quot;</code> allows us to extract for example just the red channel of the first image with:</p>
+<pre class="sourceCode r"><code class="sourceCode r">images_annotated[<span class="dv">1</span>, , , <span class="st">&quot;r&quot;</span>]    <span class="co"># first image, all rows and cols, &#39;r&#39; channel</span></code></pre>
+<pre><code>## Rank 2 tensor, shape: (10, 10)
+##      255   255   255   255   255   250  ... 
+##      255   255   255   254   255   136  ... 
+##      255   255   255   250   149   112  ... 
+##      255   255   203   182   134   106  ... 
+##      255   255   239   255   177   161  ... 
+##      255   251   220   217   165   167  ... 
+##     ...   ...   ...   ...   ...   ...   ...</code></pre>
+</div>
+<div id="data-frames-and-plotting" class="section level2">
+<h2><span class="header-section-number">2.3</span> Data Frames and Plotting</h2>
+<p>Tensortrees can be easily ‘deconstructed’ into data frames with the <code>as.data.frame()</code> function. Here’s a quick example for a small rank-2 tensor.</p>
+<pre class="sourceCode r"><code class="sourceCode r">tensor &lt;-<span class="st"> </span><span class="kw">array_reshape</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>, <span class="dt">dim =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tt</span>()
+<span class="kw">print</span>(tensor, <span class="dt">bottom =</span> <span class="st">&quot;2d&quot;</span>)</code></pre>
+<pre><code>## Rank 2 tensor, shape: (3, 4)
+##     1   2   3   4
+##     5   6   7   8
+##     9  10  11  12</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">tensor_df &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(tensor)
+<span class="kw">print</span>(tensor_df)</code></pre>
+<pre><code>##    index_1 index_2 value
+## 1        1       1     1
+## 2        2       1     5
+## 3        3       1     9
+## 4        1       2     2
+## 5        2       2     6
+## 6        3       2    10
+## 7        1       3     3
+## 8        2       3     7
+## 9        3       3    11
+## 10       1       4     4
+## 11       2       4     8
+## 12       3       4    12</code></pre>
+<p>Row 8 in the above output indicates that <code>tensor[2, 3]</code> holds value <code>7</code>. If any ranknames or dimension names are set, then we get more information in the resulting dataframe. Here’s the result for the <code>images_annotated</code> tensor above.</p>
+<pre class="sourceCode r"><code class="sourceCode r">images_df &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(images_annotated)
+
+<span class="kw">print</span>(<span class="kw">head</span>(images_df))</code></pre>
+<pre><code>##   images rows cols channels value
+## 1      1    1    1        r   255
+## 2      2    1    1        r   255
+## 3      1    2    1        r   255
+## 4      2    2    1        r   253
+## 5      1    3    1        r   255
+## 6      2    3    1        r   253</code></pre>
+<p>Now the ranknames are used for column names, and in the case of dimension names (such as our r, g, b channels) those names are used as column entries. Row four indicates that <code>images_annotated[2, 2, 1, &quot;r&quot;]</code> stores value 253.<label for="tufte-sn-7" class="margin-toggle sidenote-number">7</label><input type="checkbox" id="tufte-sn-7" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">7</span> Be aware that storing tensor data as a data frame is <em>very</em> inefficient. For a shape <code>(1000, 28, 28, 3)</code> tensor, the number of rows is the product of rank sizes, <code>1000 * 28 * 28 * 3 = 2352000</code> (2.3 million!). Worse yet, the number of columns equals the number of ranks (plus 1 for the value), so this small tensor would become a data frame with 11.7 million entries. Be default <code>as.data.frame()</code> with throw an error if the number of entries would be larger than 1 million to avoid accidental crashes - to override this we can specify <code>allow_huge = TRUE</code>.</span></p>
+<p>Being able to convert a tensor into a ‘tidy’ data frame lets us visualize their contents easily with <code>ggplot2</code>. I’m going to assume some familiarity with <code>ggplot2</code> - for a detailed overview, see <a href="http://library.open.oregonstate.edu/computationalbiology/chapter/plotting-data-and-ggplot2/">here</a>.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
+
+images_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">y =</span> rows, <span class="dt">x =</span> cols, <span class="dt">fill =</span> value)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_grid</span>(images <span class="op">~</span><span class="st"> </span>channels) <span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_equal</span>()</code></pre>
+<p><img src="index.html_files/figure-html/unnamed-chunk-72-1.png" width="672"  /></p>
+<p>It’s a bit hard to see the apple and strawberry, but they are there! If we want to visualize them as color images (rather than channels separately), we can do that, but we first have to use <code>tidyr</code>’s <code>spread()</code> function to pull the R, G, and B data into separate columns.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyr)
+images_df_rgb &lt;-<span class="st"> </span>images_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">spread</span>(channels, value)
+
+images_df_rgb <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</code></pre>
+<pre><code>##   images rows cols   r   g   b
+## 1      1    1    1 255 255 255
+## 2      1    1    2 255 255 255
+## 3      1    1    3 255 255 255
+## 4      1    1    4 255 255 255
+## 5      1    1    5 255 255 255
+## 6      1    1    6 250 252 247</code></pre>
+<p>From there, we can create a new ‘color’ column using the built-in <code>rgb()</code> function.</p>
+<pre class="sourceCode r"><code class="sourceCode r">images_df_rgb<span class="op">$</span>color &lt;-<span class="st"> </span><span class="kw">rgb</span>(images_df_rgb<span class="op">$</span>r, 
+                           images_df_rgb<span class="op">$</span>g, 
+                           images_df_rgb<span class="op">$</span>b, 
+                           <span class="dt">maxColorValue =</span> <span class="dv">255</span>)
+
+images_df_rgb <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</code></pre>
+<pre><code>##   images rows cols   r   g   b   color
+## 1      1    1    1 255 255 255 #FFFFFF
+## 2      1    1    2 255 255 255 #FFFFFF
+## 3      1    1    3 255 255 255 #FFFFFF
+## 4      1    1    4 255 255 255 #FFFFFF
+## 5      1    1    5 255 255 255 #FFFFFF
+## 6      1    1    6 250 252 247 #FAFCF7</code></pre>
+<p>The new column is of type “character” and specifies colors using a standard <code>#RRGGBB</code> hex-encoding. We can plot this data with <code>ggplot</code> using <code>scale_fill_identity()</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(images_df_rgb) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">y =</span> rows, <span class="dt">x =</span> cols, <span class="dt">fill =</span> color)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_grid</span>(images <span class="op">~</span><span class="st"> </span>.) <span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_equal</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_fill_identity</span>()</code></pre>
+<p><img src="index.html_files/figure-html/unnamed-chunk-75-1.png" width="672"  /></p>
+<p>Pretty neat! But, they’re upside down. The reason for this is that when working with image data, the (0,0)-coordinate is usually in the <em>top-left</em> of the image, with a flipped y axis.<label for="tufte-sn-8" class="margin-toggle sidenote-number">8</label><input type="checkbox" id="tufte-sn-8" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">8</span> I believe harkening back to the olden days of teletype terminals, where the first character appears in the upper-left of the printed output.</span> We can fix this by just using <code>y = -1 * rows</code>.</p>
+<p>Putting this all together, here’s a pipeline turning our raw <code>images</code> tensor (shape <code>(2, 3, 10, 10)</code>) into a dataframe and plotting it.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
+
+images <span class="op">%&gt;%</span><span class="st">                                                      </span><span class="co"># tensortree, shape (2, 3, 10, 10)</span>
+<span class="st">  </span><span class="kw">set_ranknames</span>(<span class="kw">c</span>(<span class="st">&quot;images&quot;</span>, <span class="st">&quot;channels&quot;</span>, <span class="st">&quot;rows&quot;</span>, <span class="st">&quot;cols&quot;</span>)) <span class="op">%&gt;%</span><span class="st">    </span><span class="co"># set rank names</span>
+<span class="st">  </span><span class="kw">set_dimnames_for_rank</span>(<span class="st">&quot;channels&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;r&quot;</span>, <span class="st">&quot;g&quot;</span>, <span class="st">&quot;b&quot;</span>)) <span class="op">%&gt;%</span><span class="st">       </span><span class="co"># set dimnames for the channels rank</span>
+<span class="st">  </span><span class="kw">as.data.frame</span>(<span class="dt">allow_huge =</span> T) <span class="op">%&gt;%</span><span class="st">                             </span><span class="co"># convert to data frame</span>
+<span class="st">  </span><span class="kw">spread</span>(channels, value) <span class="op">%&gt;%</span><span class="st">                                   </span><span class="co"># spread channels data (tidyr)</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">color =</span> <span class="kw">rgb</span>(r, g, b, <span class="dt">maxColorValue =</span> <span class="dv">255</span>)) <span class="op">%&gt;%</span><span class="st">         </span><span class="co"># compute color column (dplyr)</span>
+<span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st">                                                    </span><span class="co"># plot (ggplot2)</span>
+<span class="st">    </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">y =</span> <span class="dv">-1</span> <span class="op">*</span><span class="st"> </span>rows, <span class="dt">x =</span> cols, <span class="dt">fill =</span> color)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">facet_grid</span>(images <span class="op">~</span><span class="st"> </span>.) <span class="op">+</span>
+<span class="st">    </span><span class="kw">coord_equal</span>() <span class="op">+</span>
+<span class="st">    </span><span class="kw">scale_fill_identity</span>()</code></pre>
+<p><img src="index.html_files/figure-html/unnamed-chunk-76-1.png" width="672"  /></p>
+
+</div>
+</div>
+<p style="text-align: center;">
+<a href="r-background.html"><button class="btn btn-default">Previous</button></a>
+</p>
+</div>
+</div>
+
+
+
+</body>
+</html>

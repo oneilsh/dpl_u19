@@ -8,7 +8,7 @@ output:
     split_by: chapter
     css: tufte_mods.css
     tufte_features: ["fonts", "background", "italics"]
-    toc: no
+    toc: yes
 ---
 
 
