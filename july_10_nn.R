@@ -48,7 +48,22 @@ validate_labels_onehot <- to_categorical(validate_labels)
 
 # build model!
 network <- keras_model_sequential() %>%
+  layer_dense(units = 512, activation = "relu", 
+              kernel_regularizer = regularizer_l2(0.001),
+              input_shape = c(28 * 28)) %>%  # input: rank-1 tensors of shape (784)
+  layer_dense(units = 256, activation = "relu",
+              kernel_regularizer = regularizer_l2(0.001)) %>%
+  layer_dense(units = 128, activation = "relu",
+              kernel_regularizer = regularizer_l2(0.001)) %>%
+  layer_dense(units = 10, activation = "softmax")
+
+network <- keras_model_sequential() %>%
   layer_dense(units = 512, activation = "relu", input_shape = c(28 * 28)) %>%  # input: rank-1 tensors of shape (784)
+  layer_dropout(rate = 0.5) %>%
+  layer_dense(units = 256, activation = "relu", kernel_regularizer = regularizer_l2(0.001)) %>%
+  layer_dropout(rate = 0.5) %>%
+  layer_dense(units = 128, activation = "relu",kernel_regularizer = regularizer_l2(0.001)) %>%
+  layer_dropout(rate = 0.5) %>%
   layer_dense(units = 10, activation = "softmax")
 
 
@@ -67,7 +82,7 @@ history <- fit(network,
                train_images_shaped, 
                train_labels_onehot,
                validation_data = validation_data_list,
-               epochs = 5,
+               epochs = 25,
                batch_size = 128)
 
 
