@@ -295,29 +295,29 @@ we’ll cover in the next section.</p>
                              <span class="kw">c</span>(<span class="st">&quot;p1&quot;</span>, <span class="st">&quot;p2&quot;</span>, <span class="st">&quot;p3&quot;</span>, <span class="st">&quot;p4&quot;</span>))
 
 <span class="kw">print</span>(fav_colors)</code></pre>
-<pre><code>##            p1        p2        p3        p4
-## r 0.219681405 0.5182694 0.4060091 0.8632333
-## g 0.888801520 0.9528577 0.1361891 0.5115021
-## b 0.002203003 0.7451993 0.9773836 0.5752088</code></pre>
+<pre><code>##          p1        p2        p3         p4
+## r 0.7414210 0.7899177 0.8208213 0.20419723
+## g 0.5774393 0.3693943 0.6991586 0.02522016
+## b 0.5085989 0.1997531 0.7922738 0.86324310</code></pre>
 <p>This example also illustrates that when building complex lines of code, breaking them across multiple lines with indendentation
 can dramatically improve readability.</p>
 <p>This naming allows us to work with character vectors for subsetting, and we can mix and match selecting by index and name:</p>
 <pre class="sourceCode r"><code class="sourceCode r">p2_p4_r_g_colors &lt;-<span class="st"> </span>fav_colors[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="kw">c</span>(<span class="st">&quot;p2&quot;</span>, <span class="st">&quot;p4&quot;</span>)]  <span class="co"># first two rows, just the two columns</span>
 
 <span class="kw">print</span>(p2_p4_r_g_colors)</code></pre>
-<pre><code>##          p2        p4
-## r 0.5182694 0.8632333
-## g 0.9528577 0.5115021</code></pre>
+<pre><code>##          p2         p4
+## r 0.7899177 0.20419723
+## g 0.3693943 0.02522016</code></pre>
 <p>Sometimes we only want to set dimension names for one of the dimensions, for example if we had hundreds of people and didn’t need
 to identify them, but definitely wanted to keep the R, G, and B values labeled. To do so we can use <code>NULL</code> for the dimensions we don’t want to name.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dimnames</span>(fav_colors) &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="kw">c</span>(<span class="st">&quot;r&quot;</span>, <span class="st">&quot;g&quot;</span>, <span class="st">&quot;b&quot;</span>),
                              <span class="ot">NULL</span>)
 
 <span class="kw">print</span>(fav_colors)</code></pre>
-<pre><code>##          [,1]      [,2]      [,3]      [,4]
-## r 0.219681405 0.5182694 0.4060091 0.8632333
-## g 0.888801520 0.9528577 0.1361891 0.5115021
-## b 0.002203003 0.7451993 0.9773836 0.5752088</code></pre>
+<pre><code>##        [,1]      [,2]      [,3]       [,4]
+## r 0.7414210 0.7899177 0.8208213 0.20419723
+## g 0.5774393 0.3693943 0.6991586 0.02522016
+## b 0.5085989 0.1997531 0.7922738 0.86324310</code></pre>
 <p><br />
 <br /></p>
 </div>
@@ -509,11 +509,11 @@ samples &lt;-<span class="st"> </span><span class="kw">list</span>(sample1, samp
 means &lt;-<span class="st"> </span><span class="kw">lapply</span>(samples, mean)              <span class="co"># call the mean function on each element of samples</span></code></pre>
 <p>The result of <code>lapply()</code> is a list of the results of the function calls.<label for="tufte-sn-4" class="margin-toggle sidenote-number">4</label><input type="checkbox" id="tufte-sn-4" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">4</span> Because building result vectors or lists with for-loops is slow, “functional” approaches such as these are emphasized in R for efficiently performing repeated computations.</span></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(means[[<span class="dv">1</span>]])</code></pre>
-<pre><code>## [1] 3.13386</code></pre>
+<pre><code>## [1] 3.129305</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(means[[<span class="dv">2</span>]])</code></pre>
-<pre><code>## [1] 4.882351</code></pre>
+<pre><code>## [1] 5.403054</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(means[[<span class="dv">3</span>]])</code></pre>
-<pre><code>## [1] 15.28237</code></pre>
+<pre><code>## [1] 15.07026</code></pre>
 <p>Functions can also <em>return</em> functions; usually the returned function is defined inside. Here’s one that returns a function that prints a message, taking as a parameter the name to greet.</p>
 <pre class="sourceCode r"><code class="sourceCode r">get_greeting_function &lt;-<span class="st"> </span><span class="cf">function</span>(name) {
   
@@ -572,18 +572,18 @@ means &lt;-<span class="st"> </span><span class="kw">lapply</span>(samples, mean
                  <span class="dt">val =</span> <span class="kw">rnorm</span>(<span class="dv">12</span>, <span class="dt">mean =</span> <span class="dv">30</span>))
 <span class="kw">print</span>(df)</code></pre>
 <pre><code>##    xloc yloc      val
-## 1     1    1 28.70271
-## 2     1    2 31.90660
-## 3     1    3 29.75268
-## 4     1    4 27.45655
-## 5     2    1 30.11977
-## 6     2    2 30.98402
-## 7     2    3 31.49474
-## 8     2    4 31.51789
-## 9     3    1 30.23925
-## 10    3    2 31.39892
-## 11    3    3 29.35064
-## 12    3    4 32.02561</code></pre>
+## 1     1    1 30.75265
+## 2     1    2 29.50000
+## 3     1    3 31.64403
+## 4     1    4 29.21470
+## 5     2    1 31.32207
+## 6     2    2 28.25647
+## 7     2    3 31.70757
+## 8     2    4 29.76317
+## 9     3    1 31.98722
+## 10    3    2 29.74757
+## 11    3    3 29.17199
+## 12    3    4 27.89185</code></pre>
 <p>And here’s a plot showing these values as a tileplot:</p>
 <p>
 <span class="marginnote shownote">
