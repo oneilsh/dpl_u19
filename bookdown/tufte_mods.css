@@ -1,6 +1,6 @@
 p {
   font-size: 1.25rem;
-  line-height: 1.7;
+  line-height: 1.5;
   color: #333333;
 }
 
@@ -208,7 +208,7 @@ ul {
 }
 
 pre code {
-  line-height: 1.7;
+  line-height: 1.5;
 }
 
 .hljs {

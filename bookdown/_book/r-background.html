@@ -104,8 +104,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div class="row">
 <div class="col-sm-12">
-<!--bookdown:toc:end-->
-<!--bookdown:toc:start-->
+<div id="TOC">
+<ul>
+<li class="has-sub"><a href="r-background.html#r-background"><span class="toc-section-number">1</span> R Background</a><ul>
+<li><a href="r-background.html#vectors"><span class="toc-section-number">1.1</span> Vectors</a></li>
+<li><a href="r-background.html#matrices-arrays"><span class="toc-section-number">1.2</span> Matrices &amp; Arrays</a></li>
+<li><a href="r-background.html#named-matrices-arrays"><span class="toc-section-number">1.3</span> Named Matrices &amp; Arrays</a></li>
+<li><a href="r-background.html#lists"><span class="toc-section-number">1.4</span> Lists</a></li>
+<li><a href="r-background.html#data-frames"><span class="toc-section-number">1.5</span> Data Frames</a></li>
+<li><a href="r-background.html#for-loops"><span class="toc-section-number">1.6</span> For-loops</a></li>
+<li><a href="r-background.html#functions"><span class="toc-section-number">1.7</span> Functions</a></li>
+<li><a href="r-background.html#higher-order-functions"><span class="toc-section-number">1.8</span> Higher-Order Functions</a></li>
+<li><a href="r-background.html#ggplot2"><span class="toc-section-number">1.9</span> ggplot2</a></li>
+<li><a href="r-background.html#the-operator"><span class="toc-section-number">1.10</span> The <code>%&gt;%</code> operator</a></li>
+</ul></li>
+<li class="has-sub"><a href="tensortree-examples.html#tensortree-examples"><span class="toc-section-number">2</span> Tensortree Examples</a><ul>
+<li><a href="tensortree-examples.html#printing-binding-permuting"><span class="toc-section-number">2.1</span> Printing, Binding, Permuting</a></li>
+<li><a href="tensortree-examples.html#rank-names"><span class="toc-section-number">2.2</span> Rank Names</a></li>
+<li><a href="tensortree-examples.html#data-frames-and-plotting"><span class="toc-section-number">2.3</span> Data Frames and Plotting</a></li>
+</ul></li>
+</ul>
+</div>
 </div>
 </div>
 <div class="row">
@@ -125,43 +144,43 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">1.1</span> Vectors</h2>
 <p>Vectors are the most basic type of data in R; here are three vectors of length 5, one a <code>numeric</code> vector, one
 a <code>character</code> vector (which actually stores multi-character strings as elements), and one a <code>logical</code> vector:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">num_vec &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">1.3</span>, <span class="fl">2.3</span>, <span class="fl">3.3</span>, <span class="fl">4.3</span>, <span class="fl">5.3</span>)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">char_vec &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;one&quot;</span>, <span class="st">&quot;second el&quot;</span>, <span class="st">&quot;third&quot;</span>, <span class="st">&quot;four&quot;</span>, <span class="st">&quot;fifth&quot;</span>) </a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">char_vec2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;testing!&quot;</span>)</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">log_vec &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">FALSE</span>)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">num_vec &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">1.3</span>, <span class="fl">2.3</span>, <span class="fl">3.3</span>, <span class="fl">4.3</span>, <span class="fl">5.3</span>)
+char_vec &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;one&quot;</span>, <span class="st">&quot;second el&quot;</span>, <span class="st">&quot;third&quot;</span>, <span class="st">&quot;four&quot;</span>, <span class="st">&quot;fifth&quot;</span>) 
+char_vec2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;testing!&quot;</span>)
+log_vec &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">FALSE</span>)</code></pre>
 <p>Something like <code>answer &lt;- 42</code> actually produces a length-one numeric vector, equivalent to <code>answer &lt;- c(42)</code>.</p>
 <p>When performing operations (like <code>+</code>, <code>*</code>, <code>==</code>, <code>&gt;</code>, etc.) on two vectors, they will be compared element-by-element.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">print</span>(num_vec <span class="op">*</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">1000</span>, <span class="dv">10000</span>, <span class="dv">100000</span>))</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(num_vec <span class="op">*</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">1000</span>, <span class="dv">10000</span>, <span class="dv">100000</span>))</code></pre>
 <pre><code>## [1]     13    230   3300  43000 530000</code></pre>
 <p>If one is shorter, it will be “recycled” in the comparison (with a warning if the shorter vector wasn’t recycled evenly), even if the shorter vector is of length 1:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">print</span>(num_vec <span class="op">*</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">-10</span>))</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(num_vec <span class="op">*</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">-10</span>))</code></pre>
 <pre><code>## Warning in num_vec * c(10, -10): longer object length is not a multiple of
 ## shorter object length</code></pre>
 <pre><code>## [1]  13 -23  33 -43  53</code></pre>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">print</span>(num_vec <span class="op">*</span><span class="st"> </span><span class="dv">10</span>)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(num_vec <span class="op">*</span><span class="st"> </span><span class="dv">10</span>)</code></pre>
 <pre><code>## [1] 13 23 33 43 53</code></pre>
 <p>We can index into vectors with other vectors; for example we might want to extract the second and fifth entries of <code>num_vec</code>:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">selected &lt;-<span class="st"> </span>num_vec[<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">5</span>)]</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw">print</span>(selected)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">selected &lt;-<span class="st"> </span>num_vec[<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">5</span>)]
+<span class="kw">print</span>(selected)</code></pre>
 <pre><code>## [1] 2.3 5.3</code></pre>
 <p>We can use shortcut syntax like <code>2:5</code> to produce the vector <code>c(2, 3, 4, 5)</code>. This can be handy, for example, to get the second through the fifth element of another vector:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">selected &lt;-<span class="st"> </span>num_vec[<span class="dv">2</span><span class="op">:</span><span class="dv">5</span>]</a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="kw">print</span>(selected)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">selected &lt;-<span class="st"> </span>num_vec[<span class="dv">2</span><span class="op">:</span><span class="dv">5</span>]
+<span class="kw">print</span>(selected)</code></pre>
 <pre><code>## [1] 2.3 3.3 4.3 5.3</code></pre>
 <p>Lastly, of occasional use, we can negate a vector to grab indices <em>other than</em> those specified.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">selected &lt;-<span class="st"> </span>num_vec[<span class="op">-</span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">5</span>)]   <span class="co"># get indices 1, 3, 4</span></a>
-<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="kw">print</span>(selected)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">selected &lt;-<span class="st"> </span>num_vec[<span class="op">-</span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">5</span>)]   <span class="co"># get indices 1, 3, 4</span>
+<span class="kw">print</span>(selected)</code></pre>
 <pre><code>## [1] 1.3 3.3 4.3</code></pre>
 <p>Sometimes we want to print a message, rather than just a vector. The <code>paste()</code> function helps with this. First though, let’s see it’s “intended” usage of element-by-element pasting.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">first_names &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Joe&quot;</span>, <span class="st">&quot;Kim&quot;</span>)</a>
-<a class="sourceLine" id="cb16-2" data-line-number="2">last_names &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Montana&quot;</span>, <span class="st">&quot;Jong-un&quot;</span>)</a>
-<a class="sourceLine" id="cb16-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb16-4" data-line-number="4">suspects &lt;-<span class="st"> </span><span class="kw">paste</span>(last_names, first_names, <span class="dt">sep =</span> <span class="st">&quot;, &quot;</span>)</a>
-<a class="sourceLine" id="cb16-5" data-line-number="5"><span class="kw">print</span>(suspects)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">first_names &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Joe&quot;</span>, <span class="st">&quot;Kim&quot;</span>)
+last_names &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Montana&quot;</span>, <span class="st">&quot;Jong-un&quot;</span>)
+
+suspects &lt;-<span class="st"> </span><span class="kw">paste</span>(last_names, first_names, <span class="dt">sep =</span> <span class="st">&quot;, &quot;</span>)
+<span class="kw">print</span>(suspects)</code></pre>
 <pre><code>## [1] &quot;Montana, Joe&quot; &quot;Jong-un, Kim&quot;</code></pre>
 <p>For writing simple messages, the inputs are frequently just length-1 vectors:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">age &lt;-<span class="st"> </span><span class="dv">27</span></a>
-<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;Joe is&quot;</span>, age, <span class="st">&quot;years old.&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot; &quot;</span>))</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">age &lt;-<span class="st"> </span><span class="dv">27</span>
+<span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;Joe is&quot;</span>, age, <span class="st">&quot;years old.&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot; &quot;</span>))</code></pre>
 <pre><code>## [1] &quot;Joe is 27 years old.&quot;</code></pre>
 <p><br />
 <br /></p>
@@ -169,21 +188,21 @@ a <code>character</code> vector (which actually stores multi-character strings a
 <div id="matrices-arrays" class="section level2">
 <h2><span class="header-section-number">1.2</span> Matrices &amp; Arrays</h2>
 <p>R natively supports matrices; here’s how we can create a 4 by 5 matrix built from the numbers 1 through 20:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">mat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>, <span class="dt">nrow =</span> <span class="dv">4</span>, <span class="dt">ncol =</span> <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="kw">print</span>(mat)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">mat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>, <span class="dt">nrow =</span> <span class="dv">4</span>, <span class="dt">ncol =</span> <span class="dv">5</span>)
+<span class="kw">print</span>(mat)</code></pre>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5]
 ## [1,]    1    5    9   13   17
 ## [2,]    2    6   10   14   18
 ## [3,]    3    7   11   15   19
 ## [4,]    4    8   12   16   20</code></pre>
 <p>As the printout hints at, we can get at individual entries or sub-matrices with a <code>[row, col]</code> syntax.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw">print</span>(mat[<span class="dv">3</span>, <span class="dv">4</span>])       <span class="co"># entry in row 3, column 4</span></a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(mat[<span class="dv">3</span>, <span class="dv">4</span>])       <span class="co"># entry in row 3, column 4</span></code></pre>
 <pre><code>## [1] 15</code></pre>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw">print</span>(mat[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">3</span><span class="op">:</span><span class="dv">5</span>])   <span class="co"># rows 1 and 2, cols 3 through 5</span></a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(mat[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">3</span><span class="op">:</span><span class="dv">5</span>])   <span class="co"># rows 1 and 2, cols 3 through 5</span></code></pre>
 <pre><code>##      [,1] [,2] [,3]
 ## [1,]    9   13   17
 ## [2,]   10   14   18</code></pre>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="kw">print</span>(mat[, <span class="dv">3</span><span class="op">:</span><span class="dv">5</span>])      <span class="co"># all rows, columns 3 through 5</span></a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(mat[, <span class="dv">3</span><span class="op">:</span><span class="dv">5</span>])      <span class="co"># all rows, columns 3 through 5</span></code></pre>
 <pre><code>##      [,1] [,2] [,3]
 ## [1,]    9   13   17
 ## [2,]   10   14   18
@@ -192,10 +211,10 @@ a <code>character</code> vector (which actually stores multi-character strings a
 <p>A special note: in R, if what would be returned is a “lower dimension”, the result will be a smaller-dimensional type.
 For example, if we request all rows, column 4, then what is returned is <em>not</em> a 4 by 1 matrix, but rather a <em>vector</em>
 representing the fourth column.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="kw">print</span>(mat[, <span class="dv">4</span>])         <span class="co"># all rows, fourth column</span></a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(mat[, <span class="dv">4</span>])         <span class="co"># all rows, fourth column</span></code></pre>
 <pre><code>## [1] 13 14 15 16</code></pre>
 <p>To avoid this dropping, we can add a <code>, drop = FALSE</code> to the subsetting:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="kw">print</span>(mat[, <span class="dv">4</span>, <span class="dt">drop =</span> <span class="ot">FALSE</span>])         <span class="co"># all rows, fourth column, don&#39;t drop dimension</span></a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(mat[, <span class="dv">4</span>, <span class="dt">drop =</span> <span class="ot">FALSE</span>])         <span class="co"># all rows, fourth column, don&#39;t drop dimension</span></code></pre>
 <pre><code>##      [,1]
 ## [1,]   13
 ## [2,]   14
@@ -203,42 +222,42 @@ representing the fourth column.</p>
 ## [4,]   16</code></pre>
 <p>R also supports higher-dimensional arrays with the <code>array()</code> function. These get difficult to visualize, so for now
 we’ll just illustrate using <code>array()</code> to recreate the same matrix as above; note that instead of specifying <code>nrow</code> and <code>ncol</code>, we just specify <code>dim</code> giving it a vector of number of rows and columns:</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1">mat &lt;-<span class="st"> </span><span class="kw">array</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>, <span class="dt">dim =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">5</span>))</a>
-<a class="sourceLine" id="cb32-2" data-line-number="2"><span class="kw">print</span>(mat)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">mat &lt;-<span class="st"> </span><span class="kw">array</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>, <span class="dt">dim =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">5</span>))
+<span class="kw">print</span>(mat)</code></pre>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5]
 ## [1,]    1    5    9   13   17
 ## [2,]    2    6   10   14   18
 ## [3,]    3    7   11   15   19
 ## [4,]    4    8   12   16   20</code></pre>
 <p>Notice that R fills out the entries of the matrix (from the vector <code>1:20</code>) in a “fill columns first” (column-major) order. Python, by contrast (specifically <code>numpy</code>, the numeric-array package for Python), fills matrices in a “fill rows first” (row-major) order. Since the <code>keras</code> R library utilizes the <code>keras</code> Python library under the hood, it also provides a function that produces arrays this way:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="kw">library</span>(keras)</a>
-<a class="sourceLine" id="cb34-2" data-line-number="2">mat &lt;-<span class="st"> </span><span class="kw">array_reshape</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>, <span class="dt">dim =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">5</span>))</a>
-<a class="sourceLine" id="cb34-3" data-line-number="3"><span class="kw">print</span>(mat)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(keras)
+mat &lt;-<span class="st"> </span><span class="kw">array_reshape</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>, <span class="dt">dim =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">5</span>))
+<span class="kw">print</span>(mat)</code></pre>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5]
 ## [1,]    1    2    3    4    5
 ## [2,]    6    7    8    9   10
 ## [3,]   11   12   13   14   15
 ## [4,]   16   17   18   19   20</code></pre>
 <p>Under the hood, matrices and arrays are stored a simple vectors, with the dimension sizes simply defining how indices such as <code>[3, 2]</code> are mapped to the underlying vector. This means that we can use functions that work on vectors with matrices and arrays, including <code>mean()</code>, <code>max()</code>, <code>min()</code>, etc., and recycling of values.</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1"><span class="kw">print</span>(mat <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(mat))  <span class="co"># mean(mat) is 10.5, this single value is recyled in the subtraction for all elements</span></a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(mat <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(mat))  <span class="co"># mean(mat) is 10.5, this single value is recyled in the subtraction for all elements</span></code></pre>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5]
 ## [1,] -9.5 -8.5 -7.5 -6.5 -5.5
 ## [2,] -4.5 -3.5 -2.5 -1.5 -0.5
 ## [3,]  0.5  1.5  2.5  3.5  4.5
 ## [4,]  5.5  6.5  7.5  8.5  9.5</code></pre>
 <p>Similarly, we can add, subtract, multiply, etc. matrices in an element-by-element fashion (which really only makes sense if they are the same “shape”).</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1"><span class="kw">print</span>(mat <span class="op">+</span><span class="st"> </span>mat) <span class="co"># since the two matrices are the same shape, no recycling is needed</span></a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(mat <span class="op">+</span><span class="st"> </span>mat) <span class="co"># since the two matrices are the same shape, no recycling is needed</span></code></pre>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5]
 ## [1,]    2    4    6    8   10
 ## [2,]   12   14   16   18   20
 ## [3,]   22   24   26   28   30
 ## [4,]   32   34   36   38   40</code></pre>
 <p>The <code>dim()</code> function returns the dimension sizes as a vector:</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1"><span class="kw">print</span>(<span class="kw">dim</span>(mat)) </a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">dim</span>(mat)) </code></pre>
 <pre><code>## [1] 4 5</code></pre>
 <p>For completeness, here’s a 3d array with “depth” 5, “height” 3, and “width” 4 (though it’s not really import to remember which is “depth” or “width” or “height”). Note that we’re using <code>1:(3*4*5)</code> to generate a vector of numbers of the right length that get filled into the array. The printout is difficult to make sense of, but note that <code>34</code> is the entry at <code>[2, 3, 4]</code>.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1">mat &lt;-<span class="st"> </span><span class="kw">array_reshape</span>(<span class="dv">1</span><span class="op">:</span>(<span class="dv">3</span><span class="op">*</span><span class="dv">4</span><span class="op">*</span><span class="dv">5</span>), <span class="dt">dim =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>))</a>
-<a class="sourceLine" id="cb42-2" data-line-number="2"><span class="kw">print</span>(mat)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">mat &lt;-<span class="st"> </span><span class="kw">array_reshape</span>(<span class="dv">1</span><span class="op">:</span>(<span class="dv">3</span><span class="op">*</span><span class="dv">4</span><span class="op">*</span><span class="dv">5</span>), <span class="dt">dim =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>))
+<span class="kw">print</span>(mat)</code></pre>
 <pre><code>## , , 1
 ## 
 ##      [,1] [,2] [,3] [,4]
@@ -274,10 +293,10 @@ we’ll just illustrate using <code>array()</code> to recreate the same matrix a
 ## [2,]   25   30   35   40
 ## [3,]   45   50   55   60</code></pre>
 <p>Again, we’ll see more options for thinking about, visualizing, and working with arrays that are are 3-or-higher dimensional. But, we can still use our indexing tricks to get elements or sub arrays. We’ve supressed the printouts because these are so hard to make sense of anyway.</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1"><span class="kw">print</span>(mat[<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">4</span>])     <span class="co"># entry at index 3, 2, 4</span></a>
-<a class="sourceLine" id="cb44-2" data-line-number="2"><span class="kw">print</span>(mat[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">2</span><span class="op">:</span><span class="dv">4</span>, ])  <span class="co"># subarray from first dim indices 1 to 2, second dim from 2 to 4, and all third dim indices</span></a>
-<a class="sourceLine" id="cb44-3" data-line-number="3"><span class="kw">print</span>(mat[<span class="dv">1</span>, , ])       <span class="co"># only the first dim index; dimension will be dropped resulting in a 4x5</span></a>
-<a class="sourceLine" id="cb44-4" data-line-number="4"><span class="kw">print</span>(mat[<span class="dv">1</span>, , , <span class="dt">drop =</span> <span class="ot">FALSE</span>]) <span class="co"># same, but don&#39;t drop that dimension, resulting in a 1x4x5 array.</span></a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(mat[<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">4</span>])     <span class="co"># entry at index 3, 2, 4</span>
+<span class="kw">print</span>(mat[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">2</span><span class="op">:</span><span class="dv">4</span>, ])  <span class="co"># subarray from first dim indices 1 to 2, second dim from 2 to 4, and all third dim indices</span>
+<span class="kw">print</span>(mat[<span class="dv">1</span>, , ])       <span class="co"># only the first dim index; dimension will be dropped resulting in a 4x5</span>
+<span class="kw">print</span>(mat[<span class="dv">1</span>, , , <span class="dt">drop =</span> <span class="ot">FALSE</span>]) <span class="co"># same, but don&#39;t drop that dimension, resulting in a 1x4x5 array.</span></code></pre>
 <p><br />
 <br /></p>
 </div>
@@ -288,36 +307,36 @@ of persons <code>p1</code>, <code>p2</code>, <code>p3</code>, and <code>p4</code
 deep learning, as is understanding how colors are encoded with RGB (red, green, blue) values. If you are unfamiliar, check out
 this <a href="http://geraldbakker.nl/psnumbers/rgb-explained.html">article</a>. While many systems encode R, G, and B values as integers in the range <code>0</code> to <code>155</code>, in some cases they are scaled to be between <code>0</code> and <code>1</code>.</span> We set these ‘dimension names’ with a list, which
 we’ll cover in the next section.</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1">fav_colors &lt;-<span class="st"> </span><span class="kw">array_reshape</span>(<span class="kw">runif</span>(<span class="dv">12</span>, <span class="dt">min =</span> <span class="dv">0</span>, <span class="dt">max =</span> <span class="dv">1</span>),</a>
-<a class="sourceLine" id="cb45-2" data-line-number="2">                            <span class="dt">dim =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>))</a>
-<a class="sourceLine" id="cb45-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb45-4" data-line-number="4"><span class="kw">dimnames</span>(fav_colors) &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="kw">c</span>(<span class="st">&quot;r&quot;</span>, <span class="st">&quot;g&quot;</span>, <span class="st">&quot;b&quot;</span>),</a>
-<a class="sourceLine" id="cb45-5" data-line-number="5">                             <span class="kw">c</span>(<span class="st">&quot;p1&quot;</span>, <span class="st">&quot;p2&quot;</span>, <span class="st">&quot;p3&quot;</span>, <span class="st">&quot;p4&quot;</span>))</a>
-<a class="sourceLine" id="cb45-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb45-7" data-line-number="7"><span class="kw">print</span>(fav_colors)</a></code></pre></div>
-<pre><code>##          p1        p2        p3        p4
-## r 0.6392061 0.8050369 0.3999778 0.2060782
-## g 0.2920968 0.5573808 0.3831015 0.6336247
-## b 0.2151054 0.8544714 0.3159459 0.7615878</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">fav_colors &lt;-<span class="st"> </span><span class="kw">array_reshape</span>(<span class="kw">runif</span>(<span class="dv">12</span>, <span class="dt">min =</span> <span class="dv">0</span>, <span class="dt">max =</span> <span class="dv">1</span>),
+                            <span class="dt">dim =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>))
+
+<span class="kw">dimnames</span>(fav_colors) &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="kw">c</span>(<span class="st">&quot;r&quot;</span>, <span class="st">&quot;g&quot;</span>, <span class="st">&quot;b&quot;</span>),
+                             <span class="kw">c</span>(<span class="st">&quot;p1&quot;</span>, <span class="st">&quot;p2&quot;</span>, <span class="st">&quot;p3&quot;</span>, <span class="st">&quot;p4&quot;</span>))
+
+<span class="kw">print</span>(fav_colors)</code></pre>
+<pre><code>##          p1         p2        p3        p4
+## r 0.9651000 0.49847010 0.7194992 0.2316176
+## g 0.1792115 0.52307067 0.1129616 0.6848496
+## b 0.3349767 0.09104695 0.7837166 0.0896405</code></pre>
 <p>This example also illustrates that when building complex lines of code, breaking them across multiple lines with indendentation
 can dramatically improve readability.</p>
 <p>This naming allows us to work with character vectors for subsetting, and we can mix and match selecting by index and name:</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1">p2_p4_r_g_colors &lt;-<span class="st"> </span>fav_colors[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="kw">c</span>(<span class="st">&quot;p2&quot;</span>, <span class="st">&quot;p4&quot;</span>)]  <span class="co"># first two rows, just the two columns</span></a>
-<a class="sourceLine" id="cb47-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb47-3" data-line-number="3"><span class="kw">print</span>(p2_p4_r_g_colors)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">p2_p4_r_g_colors &lt;-<span class="st"> </span>fav_colors[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="kw">c</span>(<span class="st">&quot;p2&quot;</span>, <span class="st">&quot;p4&quot;</span>)]  <span class="co"># first two rows, just the two columns</span>
+
+<span class="kw">print</span>(p2_p4_r_g_colors)</code></pre>
 <pre><code>##          p2        p4
-## r 0.8050369 0.2060782
-## g 0.5573808 0.6336247</code></pre>
+## r 0.4984701 0.2316176
+## g 0.5230707 0.6848496</code></pre>
 <p>Sometimes we only want to set dimension names for one of the dimensions, for example if we had hundreds of people and didn’t need
 to identify them, but definitely wanted to keep the R, G, and B values labeled. To do so we can use <code>NULL</code> for the dimensions we don’t want to name.</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1"><span class="kw">dimnames</span>(fav_colors) &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="kw">c</span>(<span class="st">&quot;r&quot;</span>, <span class="st">&quot;g&quot;</span>, <span class="st">&quot;b&quot;</span>),</a>
-<a class="sourceLine" id="cb49-2" data-line-number="2">                             <span class="ot">NULL</span>)</a>
-<a class="sourceLine" id="cb49-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb49-4" data-line-number="4"><span class="kw">print</span>(fav_colors)</a></code></pre></div>
-<pre><code>##        [,1]      [,2]      [,3]      [,4]
-## r 0.6392061 0.8050369 0.3999778 0.2060782
-## g 0.2920968 0.5573808 0.3831015 0.6336247
-## b 0.2151054 0.8544714 0.3159459 0.7615878</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dimnames</span>(fav_colors) &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="kw">c</span>(<span class="st">&quot;r&quot;</span>, <span class="st">&quot;g&quot;</span>, <span class="st">&quot;b&quot;</span>),
+                             <span class="ot">NULL</span>)
+
+<span class="kw">print</span>(fav_colors)</code></pre>
+<pre><code>##        [,1]       [,2]      [,3]      [,4]
+## r 0.9651000 0.49847010 0.7194992 0.2316176
+## g 0.1792115 0.52307067 0.1129616 0.6848496
+## b 0.3349767 0.09104695 0.7837166 0.0896405</code></pre>
 <p><br />
 <br /></p>
 </div>
@@ -325,29 +344,29 @@ to identify them, but definitely wanted to keep the R, G, and B values labeled. 
 <h2><span class="header-section-number">1.4</span> Lists</h2>
 <p>Vectors, matrices, and arrays share a common limitation: they can’t mix datatypes, or “nest”. A numeric vector can only hold numbers, and vectors can’t store vectors (something like <code>c(c(1, 2), c(3, 4, 5)))</code> is converted to just <code>c(1, 2, 3, 4, 5)</code>). Lists, on the other hand,
 are <em>much</em> more flexible. Here’s one storing a numeric matrix, and a character vector:</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1">mat &lt;-<span class="st"> </span><span class="kw">array_reshape</span>(<span class="dv">1</span><span class="op">:</span>(<span class="dv">4</span><span class="op">*</span><span class="dv">5</span>), <span class="dt">dim =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">5</span>))</a>
-<a class="sourceLine" id="cb51-2" data-line-number="2">people &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Joe&quot;</span>, <span class="st">&quot;Mary&quot;</span>, <span class="st">&quot;Sue&quot;</span>)</a>
-<a class="sourceLine" id="cb51-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb51-4" data-line-number="4">datalist &lt;-<span class="st"> </span><span class="kw">list</span>(mat, people)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">mat &lt;-<span class="st"> </span><span class="kw">array_reshape</span>(<span class="dv">1</span><span class="op">:</span>(<span class="dv">4</span><span class="op">*</span><span class="dv">5</span>), <span class="dt">dim =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">5</span>))
+people &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Joe&quot;</span>, <span class="st">&quot;Mary&quot;</span>, <span class="st">&quot;Sue&quot;</span>)
+
+datalist &lt;-<span class="st"> </span><span class="kw">list</span>(mat, people)</code></pre>
 <p>We can get access to individual list elements by index using <code>[[]]</code>-notation.</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" data-line-number="1"><span class="kw">print</span>(datalist[[<span class="dv">1</span>]])</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(datalist[[<span class="dv">1</span>]])</code></pre>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5]
 ## [1,]    1    2    3    4    5
 ## [2,]    6    7    8    9   10
 ## [3,]   11   12   13   14   15
 ## [4,]   16   17   18   19   20</code></pre>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" data-line-number="1"><span class="kw">print</span>(datalist[[<span class="dv">2</span>]])</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(datalist[[<span class="dv">2</span>]])</code></pre>
 <pre><code>## [1] &quot;Joe&quot;  &quot;Mary&quot; &quot;Sue&quot;</code></pre>
 <p>The <code>str()</code> function is a handy way to see the “structure” of a list or some other data type.</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" data-line-number="1"><span class="kw">str</span>(datalist)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(datalist)</code></pre>
 <pre><code>## List of 2
 ##  $ : num [1:4, 1:5] 1 6 11 16 2 7 12 17 3 8 ...
 ##  $ : chr [1:3] &quot;Joe&quot; &quot;Mary&quot; &quot;Sue&quot;</code></pre>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" data-line-number="1"><span class="kw">str</span>(people)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(people)</code></pre>
 <pre><code>##  chr [1:3] &quot;Joe&quot; &quot;Mary&quot; &quot;Sue&quot;</code></pre>
 <p>In normal R usage, we frequently “name” elements and access them by name, but this is less common when working with Keras (since Python also supports lists, but not named lists).</p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" data-line-number="1">named_datalist &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">matrix =</span> mat, <span class="dt">names =</span> people)</a>
-<a class="sourceLine" id="cb60-2" data-line-number="2"><span class="kw">print</span>(named_datalist<span class="op">$</span>matrix)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">named_datalist &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">matrix =</span> mat, <span class="dt">names =</span> people)
+<span class="kw">print</span>(named_datalist<span class="op">$</span>matrix)</code></pre>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5]
 ## [1,]    1    2    3    4    5
 ## [2,]    6    7    8    9   10
@@ -360,12 +379,12 @@ are <em>much</em> more flexible. Here’s one storing a numeric matrix, and a ch
 <h2><span class="header-section-number">1.5</span> Data Frames</h2>
 <p>Data frames are a special kind of named list, with each element representing a column. The main things that make data frames unique are 1) they enforce that the columns are all the same length, ensuring data frames act as tables, and 2) they are indexable by both row and column.</p>
 <p>We don’t use them too much when interacting with Keras, so hopefully a quick example suffices. In general, however, they are the main data structure for storing table-like data in R.</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" data-line-number="1">names_vec &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Joe&quot;</span>, <span class="st">&quot;Kim&quot;</span>, <span class="st">&quot;Jerry&quot;</span>, <span class="st">&quot;Mike&quot;</span>, <span class="st">&quot;Sue&quot;</span>)</a>
-<a class="sourceLine" id="cb62-2" data-line-number="2">ages_vec &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">23</span>, <span class="dv">42</span>, <span class="dv">51</span>, <span class="dv">23</span>, <span class="dv">35</span>)</a>
-<a class="sourceLine" id="cb62-3" data-line-number="3">heights_vec &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">5.7</span>, <span class="fl">5.1</span>, <span class="fl">5.9</span>, <span class="fl">5.4</span>, <span class="fl">4.9</span>)</a>
-<a class="sourceLine" id="cb62-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb62-5" data-line-number="5">people_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">name =</span> names_vec, <span class="dt">age =</span> ages_vec, <span class="dt">height =</span> heights_vec)</a>
-<a class="sourceLine" id="cb62-6" data-line-number="6"><span class="kw">print</span>(people_df)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">names_vec &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Joe&quot;</span>, <span class="st">&quot;Kim&quot;</span>, <span class="st">&quot;Jerry&quot;</span>, <span class="st">&quot;Mike&quot;</span>, <span class="st">&quot;Sue&quot;</span>)
+ages_vec &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">23</span>, <span class="dv">42</span>, <span class="dv">51</span>, <span class="dv">23</span>, <span class="dv">35</span>)
+heights_vec &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">5.7</span>, <span class="fl">5.1</span>, <span class="fl">5.9</span>, <span class="fl">5.4</span>, <span class="fl">4.9</span>)
+
+people_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">name =</span> names_vec, <span class="dt">age =</span> ages_vec, <span class="dt">height =</span> heights_vec)
+<span class="kw">print</span>(people_df)</code></pre>
 <pre><code>##    name age height
 ## 1   Joe  23    5.7
 ## 2   Kim  42    5.1
@@ -373,29 +392,29 @@ are <em>much</em> more flexible. Here’s one storing a numeric matrix, and a ch
 ## 4  Mike  23    5.4
 ## 5   Sue  35    4.9</code></pre>
 <p>We can select rows and/or columns using <code>[ , ]</code>-indexing similar to matrices,</p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" data-line-number="1"><span class="kw">print</span>(people_df[<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">5</span>), ])  <span class="co"># rows two, four, and five; all columns</span></a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(people_df[<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">5</span>), ])  <span class="co"># rows two, four, and five; all columns</span></code></pre>
 <pre><code>##   name age height
 ## 2  Kim  42    5.1
 ## 4 Mike  23    5.4
 ## 5  Sue  35    4.9</code></pre>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" data-line-number="1"><span class="kw">print</span>(people_df[<span class="op">-</span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">5</span>), ]) <span class="co"># other rows, all columns</span></a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(people_df[<span class="op">-</span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">5</span>), ]) <span class="co"># other rows, all columns</span></code></pre>
 <pre><code>##    name age height
 ## 1   Joe  23    5.7
 ## 3 Jerry  51    5.9</code></pre>
 <p>and we can extract individual columns like lists.</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" data-line-number="1"><span class="kw">print</span>(people_df[[<span class="dv">2</span>]])   <span class="co"># second column (numeric vector)</span></a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(people_df[[<span class="dv">2</span>]])   <span class="co"># second column (numeric vector)</span></code></pre>
 <pre><code>## [1] 23 42 51 23 35</code></pre>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" data-line-number="1"><span class="kw">print</span>(people_df<span class="op">$</span>age)    <span class="co"># same (by name)</span></a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(people_df<span class="op">$</span>age)    <span class="co"># same (by name)</span></code></pre>
 <pre><code>## [1] 23 42 51 23 35</code></pre>
 <p>Be aware that the labels shown along the left-hand side are not row indices, but rather row “names” (initially “1”, “2”, “3”, etc.), which explains why they don’t change when we subset the data frame.</p>
 </div>
 <div id="for-loops" class="section level2">
 <h2><span class="header-section-number">1.6</span> For-loops</h2>
 <p>For-loops execute a <em>block</em> of code (within <code>{}</code>s) for each element of a vector or list.</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" data-line-number="1"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>) { <span class="co"># for i in the vector c(1, 2, 3, 4)</span></a>
-<a class="sourceLine" id="cb72-2" data-line-number="2">  <span class="kw">print</span>(<span class="st">&quot;Printing!&quot;</span>)</a>
-<a class="sourceLine" id="cb72-3" data-line-number="3">  <span class="kw">print</span>(i)</a>
-<a class="sourceLine" id="cb72-4" data-line-number="4">}</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>) { <span class="co"># for i in the vector c(1, 2, 3, 4)</span>
+  <span class="kw">print</span>(<span class="st">&quot;Printing!&quot;</span>)
+  <span class="kw">print</span>(i)
+}</code></pre>
 <pre><code>## [1] &quot;Printing!&quot;
 ## [1] 1
 ## [1] &quot;Printing!&quot;
@@ -404,10 +423,10 @@ are <em>much</em> more flexible. Here’s one storing a numeric matrix, and a ch
 ## [1] 3
 ## [1] &quot;Printing!&quot;
 ## [1] 4</code></pre>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" data-line-number="1"><span class="cf">for</span>(element <span class="cf">in</span> datalist) {</a>
-<a class="sourceLine" id="cb74-2" data-line-number="2">  <span class="kw">print</span>(<span class="st">&quot;Printing!&quot;</span>)</a>
-<a class="sourceLine" id="cb74-3" data-line-number="3">  <span class="kw">print</span>(element)</a>
-<a class="sourceLine" id="cb74-4" data-line-number="4">}</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="cf">for</span>(element <span class="cf">in</span> datalist) {
+  <span class="kw">print</span>(<span class="st">&quot;Printing!&quot;</span>)
+  <span class="kw">print</span>(element)
+}</code></pre>
 <pre><code>## [1] &quot;Printing!&quot;
 ##      [,1] [,2] [,3] [,4] [,5]
 ## [1,]    1    2    3    4    5
@@ -417,15 +436,15 @@ are <em>much</em> more flexible. Here’s one storing a numeric matrix, and a ch
 ## [1] &quot;Printing!&quot;
 ## [1] &quot;Joe&quot;  &quot;Mary&quot; &quot;Sue&quot;</code></pre>
 <p>Some feel that R for-loops are slow; in fact, they aren’t too bad. What <em>is</em> slow is “growing” a vector (or list) by adding elements on one-at-a-time with a loop.<label for="tufte-sn-2" class="margin-toggle sidenote-number">2</label><input type="checkbox" id="tufte-sn-2" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">2</span> Since vectors can’t “nest”, <code>c(some_vec, some_other_vec)</code> results in a concatenated single vector. Indeed, that is what <code>c</code> stands for–concatenate.</span></p>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" data-line-number="1">answer &lt;-<span class="st"> </span><span class="kw">c</span>()   <span class="co"># empty vector</span></a>
-<a class="sourceLine" id="cb76-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb76-3" data-line-number="3"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">100</span>) { </a>
-<a class="sourceLine" id="cb76-4" data-line-number="4">  <span class="co"># append the log of i to the answer vector -- </span></a>
-<a class="sourceLine" id="cb76-5" data-line-number="5">  <span class="co"># SLOW, particularly when the answer vector grows to the tens of thousands</span></a>
-<a class="sourceLine" id="cb76-6" data-line-number="6">  answer &lt;-<span class="st"> </span><span class="kw">c</span>(answer, <span class="kw">log</span>(i)) </a>
-<a class="sourceLine" id="cb76-7" data-line-number="7">}</a>
-<a class="sourceLine" id="cb76-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb76-9" data-line-number="9"><span class="kw">print</span>(answer)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">answer &lt;-<span class="st"> </span><span class="kw">c</span>()   <span class="co"># empty vector</span>
+
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">100</span>) { 
+  <span class="co"># append the log of i to the answer vector -- </span>
+  <span class="co"># SLOW, particularly when the answer vector grows to the tens of thousands</span>
+  answer &lt;-<span class="st"> </span><span class="kw">c</span>(answer, <span class="kw">log</span>(i)) 
+}
+
+<span class="kw">print</span>(answer)</code></pre>
 <pre><code>##   [1] 0.0000000 0.6931472 1.0986123 1.3862944 1.6094379 1.7917595 1.9459101
 ##   [8] 2.0794415 2.1972246 2.3025851 2.3978953 2.4849066 2.5649494 2.6390573
 ##  [15] 2.7080502 2.7725887 2.8332133 2.8903718 2.9444390 2.9957323 3.0445224
@@ -447,27 +466,27 @@ are <em>much</em> more flexible. Here’s one storing a numeric matrix, and a ch
 <div id="functions" class="section level2">
 <h2><span class="header-section-number">1.7</span> Functions</h2>
 <p>Functions! They let us encapsulate functionality, taking parameters and returning some answer or value. Here’s one that adds its two inputs and returns the result.</p>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" data-line-number="1">add_two_inputs &lt;-<span class="st"> </span><span class="cf">function</span>(a, b) {</a>
-<a class="sourceLine" id="cb78-2" data-line-number="2">  answer &lt;-<span class="st"> </span>a <span class="op">+</span><span class="st"> </span>b</a>
-<a class="sourceLine" id="cb78-3" data-line-number="3">  <span class="kw">return</span>(answer)</a>
-<a class="sourceLine" id="cb78-4" data-line-number="4">}</a>
-<a class="sourceLine" id="cb78-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb78-6" data-line-number="6">x &lt;-<span class="st"> </span><span class="dv">4</span></a>
-<a class="sourceLine" id="cb78-7" data-line-number="7">y &lt;-<span class="st"> </span><span class="dv">7</span></a>
-<a class="sourceLine" id="cb78-8" data-line-number="8">z &lt;-<span class="st"> </span><span class="kw">add_two_inputs</span>(x, y)</a>
-<a class="sourceLine" id="cb78-9" data-line-number="9"><span class="kw">print</span>(z)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">add_two_inputs &lt;-<span class="st"> </span><span class="cf">function</span>(a, b) {
+  answer &lt;-<span class="st"> </span>a <span class="op">+</span><span class="st"> </span>b
+  <span class="kw">return</span>(answer)
+}
+
+x &lt;-<span class="st"> </span><span class="dv">4</span>
+y &lt;-<span class="st"> </span><span class="dv">7</span>
+z &lt;-<span class="st"> </span><span class="kw">add_two_inputs</span>(x, y)
+<span class="kw">print</span>(z)</code></pre>
 <pre><code>## [1] 11</code></pre>
 <p>Functions can have default parameters; here’s one that raises the first input to the power of the second, but the default for the power is <code>2</code>.<label for="tufte-sn-3" class="margin-toggle sidenote-number">3</label><input type="checkbox" id="tufte-sn-3" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">3</span> If you aren’t familiar with R, try and figure out what <code>2 ^ c(3, 4)</code> will return based on the section above about Vectors, before trying the code.</span></p>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" data-line-number="1">raise_to_power &lt;-<span class="st"> </span><span class="cf">function</span>(a, <span class="dt">pow =</span> <span class="dv">2</span>) {</a>
-<a class="sourceLine" id="cb80-2" data-line-number="2">  answer &lt;-<span class="st"> </span>a <span class="op">^</span><span class="st"> </span>pow</a>
-<a class="sourceLine" id="cb80-3" data-line-number="3">  <span class="kw">return</span>(answer)</a>
-<a class="sourceLine" id="cb80-4" data-line-number="4">}</a>
-<a class="sourceLine" id="cb80-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb80-6" data-line-number="6">x &lt;-<span class="st"> </span><span class="dv">3</span></a>
-<a class="sourceLine" id="cb80-7" data-line-number="7">p &lt;-<span class="st"> </span><span class="dv">4</span></a>
-<a class="sourceLine" id="cb80-8" data-line-number="8"><span class="kw">print</span>(<span class="kw">raise_to_power</span>(x, <span class="dt">pow =</span> p))   <span class="co"># 3 ^ 4</span></a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">raise_to_power &lt;-<span class="st"> </span><span class="cf">function</span>(a, <span class="dt">pow =</span> <span class="dv">2</span>) {
+  answer &lt;-<span class="st"> </span>a <span class="op">^</span><span class="st"> </span>pow
+  <span class="kw">return</span>(answer)
+}
+
+x &lt;-<span class="st"> </span><span class="dv">3</span>
+p &lt;-<span class="st"> </span><span class="dv">4</span>
+<span class="kw">print</span>(<span class="kw">raise_to_power</span>(x, <span class="dt">pow =</span> p))   <span class="co"># 3 ^ 4</span></code></pre>
 <pre><code>## [1] 81</code></pre>
-<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb82-1" data-line-number="1"><span class="kw">print</span>(<span class="kw">raise_to_power</span>(x))      <span class="co"># 3 ^ 2</span></a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">raise_to_power</span>(x))      <span class="co"># 3 ^ 2</span></code></pre>
 <pre><code>## [1] 9</code></pre>
 <p>There are <em>many</em> functions built into R, such as <code>abs()</code> (computes absolute value), <code>t()</code> (transposes a matrix), <code>as.data.frame()</code> (tries to convert its input into a data frame), and so on. To get help for a function like <code>abs()</code>, try running <code>help(&quot;abs&quot;)</code> or <code>?abs</code>; the help pages are useful as they describe the various parameters functions take, the default values for those parameters, and what is returned by the function.</p>
 <p><br />
@@ -476,89 +495,88 @@ are <em>much</em> more flexible. Here’s one storing a numeric matrix, and a ch
 <div id="higher-order-functions" class="section level2">
 <h2><span class="header-section-number">1.8</span> Higher-Order Functions</h2>
 <p>This section is a bit advanced, but we may run into some of these concepts (if we do, we’ll review them at that point as well). Functions are data like any other; consider the result of <code>print(raise_to_power)</code>, which reveals that <code>raise_to_power</code> is a variable that stores the function code itself:</p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" data-line-number="1"><span class="kw">print</span>(raise_to_power)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(raise_to_power)</code></pre>
 <pre><code>## function(a, pow = 2) {
 ##   answer &lt;- a ^ pow
 ##   return(answer)
-## }
-## &lt;bytecode: 0x55bfd629b0a0&gt;</code></pre>
+## }</code></pre>
 <p>This means we can pass functions around as parameters to functions. Here’s another function that multiplies two values:</p>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb86-1" data-line-number="1">multiply_by &lt;-<span class="st"> </span><span class="cf">function</span>(a, b) {</a>
-<a class="sourceLine" id="cb86-2" data-line-number="2">  answer &lt;-<span class="st"> </span>a <span class="op">*</span><span class="st"> </span>b</a>
-<a class="sourceLine" id="cb86-3" data-line-number="3">  <span class="kw">return</span>(answer)</a>
-<a class="sourceLine" id="cb86-4" data-line-number="4">}</a>
-<a class="sourceLine" id="cb86-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb86-6" data-line-number="6"><span class="kw">print</span>(<span class="kw">multiply_by</span>(<span class="dv">3</span>, <span class="dv">4</span>))</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">multiply_by &lt;-<span class="st"> </span><span class="cf">function</span>(a, b) {
+  answer &lt;-<span class="st"> </span>a <span class="op">*</span><span class="st"> </span>b
+  <span class="kw">return</span>(answer)
+}
+
+<span class="kw">print</span>(<span class="kw">multiply_by</span>(<span class="dv">3</span>, <span class="dv">4</span>))</code></pre>
 <pre><code>## [1] 12</code></pre>
 <p>Easy enough. Here’s a function that takes <em>three</em> parameters: two numbers, and a function to call on them:</p>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" data-line-number="1">call_on &lt;-<span class="st"> </span><span class="cf">function</span>(a, b, func) {</a>
-<a class="sourceLine" id="cb88-2" data-line-number="2">  answer &lt;-<span class="st"> </span><span class="kw">func</span>(a, b)</a>
-<a class="sourceLine" id="cb88-3" data-line-number="3">  <span class="kw">return</span>(answer)</a>
-<a class="sourceLine" id="cb88-4" data-line-number="4">}</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">call_on &lt;-<span class="st"> </span><span class="cf">function</span>(a, b, func) {
+  answer &lt;-<span class="st"> </span><span class="kw">func</span>(a, b)
+  <span class="kw">return</span>(answer)
+}</code></pre>
 <p>This lets us use the <code>call_on</code> “higher level” function to call one of the two others.</p>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" data-line-number="1"><span class="kw">print</span>(<span class="kw">call_on</span>(<span class="dv">4</span>, <span class="dv">7</span>, raise_to_power))</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">call_on</span>(<span class="dv">4</span>, <span class="dv">7</span>, raise_to_power))</code></pre>
 <pre><code>## [1] 16384</code></pre>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb91-1" data-line-number="1"><span class="kw">print</span>(<span class="kw">call_on</span>(<span class="dv">4</span>, <span class="dv">7</span>, multiply_by))</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">call_on</span>(<span class="dv">4</span>, <span class="dv">7</span>, multiply_by))</code></pre>
 <pre><code>## [1] 28</code></pre>
 <p>R uses higher-level functions quite a bit. For example, we can apply a function to each element of a list, by calling the <code>lapply()</code> function giving a list of things to call a function on, and the function to call on each:</p>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb93-1" data-line-number="1">sample1 &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">3</span>, <span class="dt">sd =</span> <span class="dv">1</span>)   <span class="co"># length-10 vec, nums sampled from normal dist</span></a>
-<a class="sourceLine" id="cb93-2" data-line-number="2">sample2 &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">5</span>, <span class="dt">sd =</span> <span class="dv">1</span>)   <span class="co"># sampled with mean 5</span></a>
-<a class="sourceLine" id="cb93-3" data-line-number="3">sample3 &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">15</span>, <span class="dt">sd =</span> <span class="dv">1</span>)  <span class="co"># sampled with mean 15</span></a>
-<a class="sourceLine" id="cb93-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb93-5" data-line-number="5">samples &lt;-<span class="st"> </span><span class="kw">list</span>(sample1, sample2, sample3)  <span class="co"># a list containing the three vectors</span></a>
-<a class="sourceLine" id="cb93-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb93-7" data-line-number="7">means &lt;-<span class="st"> </span><span class="kw">lapply</span>(samples, mean)              <span class="co"># call the mean function on each element of samples</span></a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">sample1 &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">3</span>, <span class="dt">sd =</span> <span class="dv">1</span>)   <span class="co"># length-10 vec, nums sampled from normal dist</span>
+sample2 &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">5</span>, <span class="dt">sd =</span> <span class="dv">1</span>)   <span class="co"># sampled with mean 5</span>
+sample3 &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">15</span>, <span class="dt">sd =</span> <span class="dv">1</span>)  <span class="co"># sampled with mean 15</span>
+
+samples &lt;-<span class="st"> </span><span class="kw">list</span>(sample1, sample2, sample3)  <span class="co"># a list containing the three vectors</span>
+
+means &lt;-<span class="st"> </span><span class="kw">lapply</span>(samples, mean)              <span class="co"># call the mean function on each element of samples</span></code></pre>
 <p>The result of <code>lapply()</code> is a list of the results of the function calls.<label for="tufte-sn-4" class="margin-toggle sidenote-number">4</label><input type="checkbox" id="tufte-sn-4" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">4</span> Because building result vectors or lists with for-loops is slow, “functional” approaches such as these are emphasized in R for efficiently performing repeated computations.</span></p>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" data-line-number="1"><span class="kw">print</span>(means[[<span class="dv">1</span>]])</a></code></pre></div>
-<pre><code>## [1] 3.054083</code></pre>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb96-1" data-line-number="1"><span class="kw">print</span>(means[[<span class="dv">2</span>]])</a></code></pre></div>
-<pre><code>## [1] 5.56807</code></pre>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb98-1" data-line-number="1"><span class="kw">print</span>(means[[<span class="dv">3</span>]])</a></code></pre></div>
-<pre><code>## [1] 15.0766</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(means[[<span class="dv">1</span>]])</code></pre>
+<pre><code>## [1] 2.659586</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(means[[<span class="dv">2</span>]])</code></pre>
+<pre><code>## [1] 4.659886</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(means[[<span class="dv">3</span>]])</code></pre>
+<pre><code>## [1] 14.95497</code></pre>
 <p>Functions can also <em>return</em> functions; usually the returned function is defined inside. Here’s one that returns a function that prints a message, taking as a parameter the name to greet.</p>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" data-line-number="1">get_greeting_function &lt;-<span class="st"> </span><span class="cf">function</span>(name) {</a>
-<a class="sourceLine" id="cb100-2" data-line-number="2">  </a>
-<a class="sourceLine" id="cb100-3" data-line-number="3">  greeting_function &lt;-<span class="st"> </span><span class="cf">function</span>() {</a>
-<a class="sourceLine" id="cb100-4" data-line-number="4">    <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;Hello&quot;</span>, name, <span class="dt">sep =</span> <span class="st">&quot; &quot;</span>))</a>
-<a class="sourceLine" id="cb100-5" data-line-number="5">  }</a>
-<a class="sourceLine" id="cb100-6" data-line-number="6">  </a>
-<a class="sourceLine" id="cb100-7" data-line-number="7">  <span class="kw">return</span>(greeting_function)</a>
-<a class="sourceLine" id="cb100-8" data-line-number="8">}</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">get_greeting_function &lt;-<span class="st"> </span><span class="cf">function</span>(name) {
+  
+  greeting_function &lt;-<span class="st"> </span><span class="cf">function</span>() {
+    <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;Hello&quot;</span>, name, <span class="dt">sep =</span> <span class="st">&quot; &quot;</span>))
+  }
+  
+  <span class="kw">return</span>(greeting_function)
+}</code></pre>
 <p>Notice that the function that is returned takes no parameters - but it refers to the <code>name</code> parameter that is passed in to the function that created it. This ‘binds’ the name for the returned function to whatever was given, and each returned function can have independent bindings.</p>
-<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb101-1" data-line-number="1">sayhi1 &lt;-<span class="st"> </span><span class="kw">get_greeting_function</span>(<span class="st">&quot;Joe&quot;</span>)</a>
-<a class="sourceLine" id="cb101-2" data-line-number="2"><span class="kw">sayhi1</span>()</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">sayhi1 &lt;-<span class="st"> </span><span class="kw">get_greeting_function</span>(<span class="st">&quot;Joe&quot;</span>)
+<span class="kw">sayhi1</span>()</code></pre>
 <pre><code>## [1] &quot;Hello Joe&quot;</code></pre>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb103-1" data-line-number="1">sayhi2 &lt;-<span class="st"> </span><span class="kw">get_greeting_function</span>(<span class="st">&quot;Jerry&quot;</span>)</a>
-<a class="sourceLine" id="cb103-2" data-line-number="2"><span class="kw">sayhi2</span>()</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">sayhi2 &lt;-<span class="st"> </span><span class="kw">get_greeting_function</span>(<span class="st">&quot;Jerry&quot;</span>)
+<span class="kw">sayhi2</span>()</code></pre>
 <pre><code>## [1] &quot;Hello Jerry&quot;</code></pre>
 <p>This gets particularly useful when using the “super-assigner” <code>&lt;&lt;-</code>, which assigns to variables defined “outside” a particular function.</p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb105-1" data-line-number="1">create_counter_func &lt;-<span class="st"> </span><span class="cf">function</span>() {</a>
-<a class="sourceLine" id="cb105-2" data-line-number="2">  counter &lt;-<span class="st"> </span><span class="dv">0</span></a>
-<a class="sourceLine" id="cb105-3" data-line-number="3">  </a>
-<a class="sourceLine" id="cb105-4" data-line-number="4">  counter_func &lt;-<span class="st"> </span><span class="cf">function</span>() {</a>
-<a class="sourceLine" id="cb105-5" data-line-number="5">    counter &lt;&lt;-<span class="st"> </span>counter <span class="op">+</span><span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb105-6" data-line-number="6">    <span class="kw">return</span>(counter)</a>
-<a class="sourceLine" id="cb105-7" data-line-number="7">  }</a>
-<a class="sourceLine" id="cb105-8" data-line-number="8">  </a>
-<a class="sourceLine" id="cb105-9" data-line-number="9">  <span class="kw">return</span>(counter_func)</a>
-<a class="sourceLine" id="cb105-10" data-line-number="10">}</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">create_counter_func &lt;-<span class="st"> </span><span class="cf">function</span>() {
+  counter &lt;-<span class="st"> </span><span class="dv">0</span>
+  
+  counter_func &lt;-<span class="st"> </span><span class="cf">function</span>() {
+    counter &lt;&lt;-<span class="st"> </span>counter <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
+    <span class="kw">return</span>(counter)
+  }
+  
+  <span class="kw">return</span>(counter_func)
+}</code></pre>
 <p>Here’s what will happen: when we call <code>create_counter_func()</code> it will create a <code>counter</code> variable, and a <code>counter_func</code> that can access the counter through binding; whenever the returned function is called, it updates the variable through the binding before returning it. As a result, each call of the returned function returns the next larger integer.</p>
-<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb106-1" data-line-number="1">counter1 &lt;-<span class="st"> </span><span class="kw">create_counter_func</span>()</a>
-<a class="sourceLine" id="cb106-2" data-line-number="2"><span class="kw">print</span>(<span class="kw">counter1</span>()) <span class="co"># returns 1</span></a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">counter1 &lt;-<span class="st"> </span><span class="kw">create_counter_func</span>()
+<span class="kw">print</span>(<span class="kw">counter1</span>()) <span class="co"># returns 1</span></code></pre>
 <pre><code>## [1] 1</code></pre>
-<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb108-1" data-line-number="1"><span class="kw">print</span>(<span class="kw">counter1</span>()) <span class="co"># returns 2</span></a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">counter1</span>()) <span class="co"># returns 2</span></code></pre>
 <pre><code>## [1] 2</code></pre>
-<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb110-1" data-line-number="1"><span class="kw">print</span>(<span class="kw">counter1</span>()) <span class="co"># returns 3</span></a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">counter1</span>()) <span class="co"># returns 3</span></code></pre>
 <pre><code>## [1] 3</code></pre>
 <p>Because new counter variables are independently created by <code>create_counter_func()</code>, we can have multiple such counter functions:</p>
-<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb112-1" data-line-number="1">counter2 &lt;-<span class="st"> </span><span class="kw">create_counter_func</span>()</a>
-<a class="sourceLine" id="cb112-2" data-line-number="2"><span class="kw">print</span>(<span class="kw">counter2</span>()) <span class="co"># returns 1</span></a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">counter2 &lt;-<span class="st"> </span><span class="kw">create_counter_func</span>()
+<span class="kw">print</span>(<span class="kw">counter2</span>()) <span class="co"># returns 1</span></code></pre>
 <pre><code>## [1] 1</code></pre>
-<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb114-1" data-line-number="1"><span class="kw">print</span>(<span class="kw">counter1</span>()) <span class="co"># returns 4</span></a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">counter1</span>()) <span class="co"># returns 4</span></code></pre>
 <pre><code>## [1] 4</code></pre>
-<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb116-1" data-line-number="1"><span class="kw">print</span>(<span class="kw">counter2</span>()) <span class="co"># returns 2</span></a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">counter2</span>()) <span class="co"># returns 2</span></code></pre>
 <pre><code>## [1] 2</code></pre>
-<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb118-1" data-line-number="1"><span class="kw">print</span>(<span class="kw">counter1</span>()) <span class="co"># returns 5</span></a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">counter1</span>()) <span class="co"># returns 5</span></code></pre>
 <pre><code>## [1] 5</code></pre>
 <p>A function like this, that returns the item in some kind of sequence with each call, is known as a <em>generator</em> function.</p>
 <p><br />
@@ -568,23 +586,23 @@ are <em>much</em> more flexible. Here’s one storing a numeric matrix, and a ch
 <h2><span class="header-section-number">1.9</span> ggplot2</h2>
 <p>ggplot2 is a popular library for generating plots. If you aren’t familiar, know that it has its own specialized syntax for generating plots (it implements a “domain specific language”, or DSL), and only plots data present in data frames.</p>
 <p>We’ll be mostly using it to plot tiles-plots or heatmaps. Here’s what an example dataframe might look like:</p>
-<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb120-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">xloc =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>),</a>
-<a class="sourceLine" id="cb120-2" data-line-number="2">                 <span class="dt">yloc =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>),</a>
-<a class="sourceLine" id="cb120-3" data-line-number="3">                 <span class="dt">val =</span> <span class="kw">rnorm</span>(<span class="dv">12</span>, <span class="dt">mean =</span> <span class="dv">30</span>))</a>
-<a class="sourceLine" id="cb120-4" data-line-number="4"><span class="kw">print</span>(df)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">xloc =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>),
+                 <span class="dt">yloc =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>),
+                 <span class="dt">val =</span> <span class="kw">rnorm</span>(<span class="dv">12</span>, <span class="dt">mean =</span> <span class="dv">30</span>))
+<span class="kw">print</span>(df)</code></pre>
 <pre><code>##    xloc yloc      val
-## 1     1    1 30.62627
-## 2     1    2 28.19397
-## 3     1    3 29.93218
-## 4     1    4 31.35440
-## 5     2    1 27.68207
-## 6     2    2 29.40766
-## 7     2    3 30.08421
-## 8     2    4 29.52015
-## 9     3    1 29.03197
-## 10    3    2 29.70387
-## 11    3    3 30.17862
-## 12    3    4 30.01240</code></pre>
+## 1     1    1 31.37257
+## 2     1    2 28.86655
+## 3     1    3 30.55246
+## 4     1    4 30.52355
+## 5     2    1 31.96804
+## 6     2    2 30.60881
+## 7     2    3 30.13264
+## 8     2    4 30.03196
+## 9     3    1 27.95090
+## 10    3    2 31.07159
+## 11    3    3 29.72493
+## 12    3    4 31.35251</code></pre>
 <p>And here’s a plot showing these values as a tileplot:</p>
 <p>
 <span class="marginnote shownote">
@@ -595,16 +613,16 @@ are <em>much</em> more flexible. Here’s one storing a numeric matrix, and a ch
 <p class="caption marginnote">--> <!--</p>-->
 <!--</div>--></span>
 </p>
-<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb122-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
-<a class="sourceLine" id="cb122-2" data-line-number="2"><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb122-3" data-line-number="3"><span class="st">  </span><span class="co"># plot a layer with data from the df dataframe</span></a>
-<a class="sourceLine" id="cb122-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_tile</span>(<span class="dt">data =</span> df,</a>
-<a class="sourceLine" id="cb122-5" data-line-number="5">            <span class="co"># map column data to what is drawn</span></a>
-<a class="sourceLine" id="cb122-6" data-line-number="6">            <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> xloc, <span class="dt">y =</span> yloc, <span class="dt">fill =</span> val)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb122-7" data-line-number="7"><span class="st">  </span><span class="co"># don&#39;t stretch axes, keep them the same relative size</span></a>
-<a class="sourceLine" id="cb122-8" data-line-number="8"><span class="st">  </span><span class="kw">coord_equal</span>() <span class="op">+</span><span class="st">       </span></a>
-<a class="sourceLine" id="cb122-9" data-line-number="9"><span class="st">  </span><span class="co"># make font size a little bigger</span></a>
-<a class="sourceLine" id="cb122-10" data-line-number="10"><span class="st">  </span><span class="kw">theme_gray</span>(<span class="dv">18</span>)        </a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
+<span class="kw">ggplot</span>() <span class="op">+</span>
+<span class="st">  </span><span class="co"># plot a layer with data from the df dataframe</span>
+<span class="st">  </span><span class="kw">geom_tile</span>(<span class="dt">data =</span> df,
+            <span class="co"># map column data to what is drawn</span>
+            <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> xloc, <span class="dt">y =</span> yloc, <span class="dt">fill =</span> val)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="co"># don&#39;t stretch axes, keep them the same relative size</span>
+<span class="st">  </span><span class="kw">coord_equal</span>() <span class="op">+</span><span class="st">       </span>
+<span class="st">  </span><span class="co"># make font size a little bigger</span>
+<span class="st">  </span><span class="kw">theme_gray</span>(<span class="dv">18</span>)        </code></pre>
 <p><br />
 <br /></p>
 </div>
@@ -612,40 +630,40 @@ are <em>much</em> more flexible. Here’s one storing a numeric matrix, and a ch
 <h2><span class="header-section-number">1.10</span> The <code>%&gt;%</code> operator</h2>
 <p>The <code>%&gt;%</code> operator is a powerful tool introduced by the <code>magrittr</code> package and utilized by many modern R users and packages, including <code>keras</code>. In order to use it most effectively, it helps to understand exactly what it does.</p>
 <p>First, it’s not uncommon to run data through a number of different functions. Suppose we have a vector of some numbers,</p>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb123-1" data-line-number="1">vals &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="fl">3.9</span>, <span class="fl">3.1</span>, <span class="dv">2</span>, <span class="fl">1.4</span>, <span class="dv">7</span>, <span class="fl">-4.5</span>, <span class="fl">2.7</span>)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">vals &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="fl">3.9</span>, <span class="fl">3.1</span>, <span class="dv">2</span>, <span class="fl">1.4</span>, <span class="dv">7</span>, <span class="fl">-4.5</span>, <span class="fl">2.7</span>)</code></pre>
 <p>and we want to compute sum of the cubes of the absolute values of the numbers. We could do so with a sequence of calls (intermediate printouts added for clarity).</p>
-<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb124-1" data-line-number="1">absolutes &lt;-<span class="st"> </span><span class="kw">abs</span>(vals)                  <span class="co"># take absolute values</span></a>
-<a class="sourceLine" id="cb124-2" data-line-number="2"><span class="kw">print</span>(absolutes)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">absolutes &lt;-<span class="st"> </span><span class="kw">abs</span>(vals)                  <span class="co"># take absolute values</span>
+<span class="kw">print</span>(absolutes)</code></pre>
 <pre><code>## [1] 3.9 3.1 2.0 1.4 7.0 4.5 2.7</code></pre>
-<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb126-1" data-line-number="1">cubes &lt;-<span class="st"> </span><span class="kw">raise_to_power</span>(absolutes, <span class="dv">3</span>)   <span class="co"># cube each</span></a>
-<a class="sourceLine" id="cb126-2" data-line-number="2"><span class="kw">print</span>(cubes)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">cubes &lt;-<span class="st"> </span><span class="kw">raise_to_power</span>(absolutes, <span class="dv">3</span>)   <span class="co"># cube each</span>
+<span class="kw">print</span>(cubes)</code></pre>
 <pre><code>## [1]  59.319  29.791   8.000   2.744 343.000  91.125  19.683</code></pre>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb128-1" data-line-number="1">total &lt;-<span class="st"> </span><span class="kw">sum</span>(cubes)                     <span class="co"># compute sum</span></a>
-<a class="sourceLine" id="cb128-2" data-line-number="2"><span class="kw">print</span>(total)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">total &lt;-<span class="st"> </span><span class="kw">sum</span>(cubes)                     <span class="co"># compute sum</span>
+<span class="kw">print</span>(total)</code></pre>
 <pre><code>## [1] 553.662</code></pre>
 <p>Alternatively, we could just nest the function calls appropriately.</p>
-<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb130-1" data-line-number="1">total &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">raise_to_power</span>(<span class="kw">abs</span>(vals), <span class="dv">3</span>))</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">total &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">raise_to_power</span>(<span class="kw">abs</span>(vals), <span class="dv">3</span>))</code></pre>
 <p>This can quickly become unweildy, particularly when we have secondary arguments to functions as we do here with <code>raise_to_power()</code>. The <code>%&gt;%</code> operator is made to help with this, but first it helps to understand very simple usage of <code>%&gt;%</code>, and then it helps to understand a bit about <em>associativity</em>.</p>
 <p>For a basic use of <code>%&gt;%</code>, first we need to load the <code>magrittr</code> library, or some library that loads it, like <code>keras</code>. What the operator does is pass the result of the left hand side <em>as the first parameter</em> to the function specified on the right hand side. So, rather than <code>absolutes &lt;- abs(vals)</code>, we can</p>
-<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb131-1" data-line-number="1"><span class="kw">library</span>(keras)</a>
-<a class="sourceLine" id="cb131-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb131-3" data-line-number="3">absolutes &lt;-<span class="st"> </span>vals <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">abs</span>()</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(keras)
+
+absolutes &lt;-<span class="st"> </span>vals <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">abs</span>()</code></pre>
 <p>This works even if what is on the left-hand side is the result of a function call, and even if the right-hand side takes secondary arguments. In this line the result of <code>abs(vals)</code> is sent as the first argument to <code>raise_to_power</code>; any other arguments (here 3) are passed after that first argument.</p>
-<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb132-1" data-line-number="1">cubes &lt;-<span class="st"> </span><span class="kw">abs</span>(vals) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">raise_to_power</span>(<span class="dv">3</span>) <span class="co"># the </span></a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">cubes &lt;-<span class="st"> </span><span class="kw">abs</span>(vals) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">raise_to_power</span>(<span class="dv">3</span>) <span class="co"># the </span></code></pre>
 <p>Now, on to associativity: you are likely familiar with the fact that addition and multiplicaton are <em>associative</em>: <code>a + b + c + d</code> is the same as <code>a + (b + (c + d))</code> which is the same as <code>((a + b) + c) + d</code>.</p>
 <p>Some operators, like division, are only <em>left-associative</em>; for example, when we say <code>a / b / c / d</code> the correct computation is <code>((a / b) / c) / d</code>. By contrast, powers are <em>right-associative</em>; <code>a ^ b ^ c ^ d</code> needs to be computed as <code>a ^ (b ^ (c ^ d))</code>.</p>
 <p>Going back to <code>%&gt;%</code>, we can chain the usage for our computation. Here’s an alternative method of computing it:</p>
-<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb133-1" data-line-number="1">total &lt;-<span class="st"> </span>vals <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">abs</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">raise_to_power</span>(<span class="dv">3</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sum</span>()</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">total &lt;-<span class="st"> </span>vals <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">abs</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">raise_to_power</span>(<span class="dv">3</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sum</span>()</code></pre>
 <p>It’s common to break such long lines:</p>
-<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb134-1" data-line-number="1">total &lt;-<span class="st"> </span>vals <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb134-2" data-line-number="2"><span class="st">  </span><span class="kw">abs</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb134-3" data-line-number="3"><span class="st">  </span><span class="kw">raise_to_power</span>(<span class="dv">3</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb134-4" data-line-number="4"><span class="st">  </span><span class="kw">sum</span>()</a>
-<a class="sourceLine" id="cb134-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb134-6" data-line-number="6"><span class="kw">print</span>(total)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">total &lt;-<span class="st"> </span>vals <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">abs</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">raise_to_power</span>(<span class="dv">3</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">sum</span>()
+
+<span class="kw">print</span>(total)</code></pre>
 <pre><code>## [1] 553.662</code></pre>
 <p>The reason this works so nicely is that <code>%&gt;%</code> is emplemented as a left-associative operator! When parenthesized the computation works like</p>
-<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb136-1" data-line-number="1">total &lt;-<span class="st"> </span>((vals <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">abs</span>()) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">raise_to_power</span>(<span class="dv">3</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sum</span>()</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">total &lt;-<span class="st"> </span>((vals <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">abs</span>()) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">raise_to_power</span>(<span class="dv">3</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sum</span>()</code></pre>
 <p>More succinctly, <code>a %&gt;% b %&gt;% c %&gt;% d</code> becomes <code>((a %&gt;% b) %&gt;% c) %&gt;% d</code> (where <code>a</code>, <code>b</code>, <code>c</code>, and <code>d</code> are actually function calls). Thus, <code>%&gt;%</code> always gets the fully computed value for the left side before passing it to the right side, effectively make it read like “<code>vals</code>, then <code>abs()</code>, then <code>raise_to_power(3)</code>, then <code>sum()</code>.”</p>
 <p>The use of <code>%&gt;%</code> in R coding has grown rapidly because it makes R code shorter and more readable.</p>
 
