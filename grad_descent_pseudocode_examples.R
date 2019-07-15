@@ -5,9 +5,16 @@ get_prediction <- function(x, p1, p2) {
   yhat
 }
 
-get_loss <- function(x, p1, p2, y) {
+
+get_loss <- function(x, p1, p2, actualy) {
   yhat <- get_prediction(x, p1, p2)
-  loss <- (yhat - y) ^ 2
+  loss <- (yhat - actualy) ^ 2
   loss
 }
+
+library(Deriv)
+deriv_p1 <- Deriv(get_loss, "p1")
+deriv_p1(3, 1.4, 0.7, 8)
+
+
 

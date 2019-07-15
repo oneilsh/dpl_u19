@@ -1,0 +1,76 @@
+# Tensortree Examples
+
+We've seen that the `tensortree` package can help illuminate tensors via custom printouts, for example in exploring the `mnist` dataset.
+
+```{r}
+library(keras)
+library(tensortree)
+
+mnist <- dataset_mnist()   # load mnist dataset
+
+train_images <- mnist$train$x
+train_labels <- mnist$train$y
+```
+
+To start with, we need to add some metadata to the tensors by converting them with `as.tensortree()` or `tt()` for short:
+
+```{r}
+print(tt(train_images))
+```
+
+Using `%>%` syntax, the above would be `train_images %>% tt() %>% print()`. The `print()` function can take a variety of parameters, for example the number of entries to show for the last 1, 2, or 3 ranks (default = 6).
+
+```{r}
+train_images %>% tt() %>% print(end_n = 16)
+```
+
+And we can adjust how many entries to show per level above that:
+
+```{r smalltext}
+train_images %>% tt() %>% print(end_n = 16, max_per_level = 1)
+```
+
+Let's play with some other data by using `keras`' `image_load()` and `image_to_array()` function to read two JPG files into tensors.
+
+[Strawberry](images/strawberry.jpg) [Apple](images/apple.jpg)
+
+For ease of visualization we're going to scale them to just 10x10, and for now we'll format them with `channels_first`, resulting in rank-3 tensors with shape `(3, 10, 10)`.
+
+```{r}
+# read raw image data,
+# convert to tensor with a 'channels-first' representation
+# and convert to tt() 
+strawberry <- image_load("images/strawberry.jpg", target_size = c(10, 10)) %>%
+              image_to_array(data_format = "channels_first") %>% 
+              tt()
+
+apple <- image_load("images/apple.jpg", target_size = c(10, 10)) %>%
+         image_to_array(data_format = "channels_first") %>%
+         tt()
+
+
+apple %>% print(max_per_level = 3)
+```
+
+We can 'bind' tensors together to create a new tensor of higher rank; in this case a `(3, 10, 10)` tensor bound to a `(3, 10, 10)`
+tensor will result in a `(2, 3, 10, 10)` tensor (images, channels, rows, columns).
+
+```{r}
+images <- bind(apple, strawberry)
+
+images
+```
+
+We can permute the ranks of a tensortree if we wish, for example to convert our channels-first tensor into a channels-last tensor (shape `(2, 10, 10, 3)`).^[This is a fairly thin wrapper around the base-R function `aperm()`.]
+
+```{r}
+images <- images %>% permute(c(1, 3, 4, 2))
+```
+
+If the last rank of a tensor is of size 3, the printout assumes the tensor represents a color channels-last image, and so prints the last three ranks in "3d", where the channel values are shown as embedded vectors:
+
+```{r}
+images %>% print(end_n = 5)
+```
+
+
