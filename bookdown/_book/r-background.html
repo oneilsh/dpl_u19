@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="Deep Learning for Life Scientists" />
+<meta property="og:type" content="book" />
+
+
+
+
+
+<meta name="author" content="Shawn T. O’Neil" />
+
+<meta name="date" content="2019-01-01" />
+
+
+<meta name="description" content="Deep Learning for Life Scientists">
+
+<title>Deep Learning for Life Scientists</title>
+
+<link href="libs/tufte-css-2015.12.29/tufte-fonts.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/tufte-background.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/tufte-italics.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="tufte_mods.css" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+<div class="row">
+<div class="col-sm-12">
+<!--bookdown:toc:end-->
+<!--bookdown:toc:start-->
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="header">
+<h1 class="title">Deep Learning for Life Scientists</h1>
+<h3 class="subtitle"><em>Notes, CGRB Workshop, July/August 2019</em></h3>
+<h4 class="author"><em>Shawn T. O’Neil</em></h4>
+<h4 class="date"><em>2019</em></h4>
+</div>
+<div id="r-background" class="section level1">
+<h1><span class="header-section-number">1</span> R Background</h1>
+<p>This doc assumes some familiarity with R, serving mostly as a refresher for basic concepts and introduction to more advanced concepts that come in handy when using the <code>keras</code> library for deep learning.</p>
+<p><br />
+<br /></p>
+<div id="vectors" class="section level2">
+<h2><span class="header-section-number">1.1</span> Vectors</h2>
+<p>Vectors are the most basic type of data in R; here are three vectors of length 5, one a <code>numeric</code> vector, one
+a <code>character</code> vector (which actually stores multi-character strings as elements), and one a <code>logical</code> vector:</p>
+<pre class="sourceCode r"><code class="sourceCode r">num_vec &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">1.3</span>, <span class="fl">2.3</span>, <span class="fl">3.3</span>, <span class="fl">4.3</span>, <span class="fl">5.3</span>)
+char_vec &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;one&quot;</span>, <span class="st">&quot;second el&quot;</span>, <span class="st">&quot;third&quot;</span>, <span class="st">&quot;four&quot;</span>, <span class="st">&quot;fifth&quot;</span>) 
+char_vec2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;testing!&quot;</span>)
+log_vec &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">FALSE</span>)</code></pre>
+<p>Something like <code>answer &lt;- 42</code> actually produces a length-one numeric vector, equivalent to <code>answer &lt;- c(42)</code>.</p>
+<p>When performing operations (like <code>+</code>, <code>*</code>, <code>==</code>, <code>&gt;</code>, etc.) on two vectors, they will be compared element-by-element.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(num_vec <span class="op">*</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">1000</span>, <span class="dv">10000</span>, <span class="dv">100000</span>))</code></pre>
+<pre><code>## [1]     13    230   3300  43000 530000</code></pre>
+<p>If one is shorter, it will be “recycled” in the comparison (with a warning if the shorter vector wasn’t recycled evenly), even if the shorter vector is of length 1:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(num_vec <span class="op">*</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">-10</span>))</code></pre>
+<pre><code>## Warning in num_vec * c(10, -10): longer object length is not a multiple of
+## shorter object length</code></pre>
+<pre><code>## [1]  13 -23  33 -43  53</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(num_vec <span class="op">*</span><span class="st"> </span><span class="dv">10</span>)</code></pre>
+<pre><code>## [1] 13 23 33 43 53</code></pre>
+<p>We can index into vectors with other vectors; for example we might want to extract the second and fifth entries of <code>num_vec</code>:</p>
+<pre class="sourceCode r"><code class="sourceCode r">selected &lt;-<span class="st"> </span>num_vec[<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">5</span>)]
+<span class="kw">print</span>(selected)</code></pre>
+<pre><code>## [1] 2.3 5.3</code></pre>
+<p>We can use shortcut syntax like <code>2:5</code> to produce the vector <code>c(2, 3, 4, 5)</code>. This can be handy, for example, to get the second through the fifth element of another vector:</p>
+<pre class="sourceCode r"><code class="sourceCode r">selected &lt;-<span class="st"> </span>num_vec[<span class="dv">2</span><span class="op">:</span><span class="dv">5</span>]
+<span class="kw">print</span>(selected)</code></pre>
+<pre><code>## [1] 2.3 3.3 4.3 5.3</code></pre>
+<p>Lastly, of occasional use, we can negate a vector to grab indices <em>other than</em> those specified.</p>
+<pre class="sourceCode r"><code class="sourceCode r">selected &lt;-<span class="st"> </span>num_vec[<span class="op">-</span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">5</span>)]   <span class="co"># get indices 1, 3, 4</span>
+<span class="kw">print</span>(selected)</code></pre>
+<pre><code>## [1] 1.3 3.3 4.3</code></pre>
+<p>Sometimes we want to print a message, rather than just a vector. The <code>paste()</code> function helps with this. First though, let’s see it’s “intended” usage of element-by-element pasting.</p>
+<pre class="sourceCode r"><code class="sourceCode r">first_names &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Joe&quot;</span>, <span class="st">&quot;Kim&quot;</span>)
+last_names &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Montana&quot;</span>, <span class="st">&quot;Jong-un&quot;</span>)
+
+suspects &lt;-<span class="st"> </span><span class="kw">paste</span>(last_names, first_names, <span class="dt">sep =</span> <span class="st">&quot;, &quot;</span>)
+<span class="kw">print</span>(suspects)</code></pre>
+<pre><code>## [1] &quot;Montana, Joe&quot; &quot;Jong-un, Kim&quot;</code></pre>
+<p>For writing simple messages, the inputs are frequently just length-1 vectors:</p>
+<pre class="sourceCode r"><code class="sourceCode r">age &lt;-<span class="st"> </span><span class="dv">27</span>
+<span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;Joe is&quot;</span>, age, <span class="st">&quot;years old.&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot; &quot;</span>))</code></pre>
+<pre><code>## [1] &quot;Joe is 27 years old.&quot;</code></pre>
+<p><br />
+<br /></p>
+</div>
+<div id="matrices-arrays" class="section level2">
+<h2><span class="header-section-number">1.2</span> Matrices &amp; Arrays</h2>
+<p>R natively supports matrices; here’s how we can create a 4 by 5 matrix built from the numbers 1 through 20:</p>
+<pre class="sourceCode r"><code class="sourceCode r">mat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>, <span class="dt">nrow =</span> <span class="dv">4</span>, <span class="dt">ncol =</span> <span class="dv">5</span>)
+<span class="kw">print</span>(mat)</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    1    5    9   13   17
+## [2,]    2    6   10   14   18
+## [3,]    3    7   11   15   19
+## [4,]    4    8   12   16   20</code></pre>
+<p>As the printout hints at, we can get at individual entries or sub-matrices with a <code>[row, col]</code> syntax.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(mat[<span class="dv">3</span>, <span class="dv">4</span>])       <span class="co"># entry in row 3, column 4</span></code></pre>
+<pre><code>## [1] 15</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(mat[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">3</span><span class="op">:</span><span class="dv">5</span>])   <span class="co"># rows 1 and 2, cols 3 through 5</span></code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    9   13   17
+## [2,]   10   14   18</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(mat[, <span class="dv">3</span><span class="op">:</span><span class="dv">5</span>])      <span class="co"># all rows, columns 3 through 5</span></code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    9   13   17
+## [2,]   10   14   18
+## [3,]   11   15   19
+## [4,]   12   16   20</code></pre>
+<p>A special note: in R, if what would be returned is a “lower dimension”, the result will be a smaller-dimensional type.
+For example, if we request all rows, column 4, then what is returned is <em>not</em> a 4 by 1 matrix, but rather a <em>vector</em>
+representing the fourth column.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(mat[, <span class="dv">4</span>])         <span class="co"># all rows, fourth column</span></code></pre>
+<pre><code>## [1] 13 14 15 16</code></pre>
+<p>To avoid this dropping, we can add a <code>, drop = FALSE</code> to the subsetting:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(mat[, <span class="dv">4</span>, <span class="dt">drop =</span> <span class="ot">FALSE</span>])         <span class="co"># all rows, fourth column, don&#39;t drop dimension</span></code></pre>
+<pre><code>##      [,1]
+## [1,]   13
+## [2,]   14
+## [3,]   15
+## [4,]   16</code></pre>
+<p>R also supports higher-dimensional arrays with the <code>array()</code> function. These get difficult to visualize, so for now
+we’ll just illustrate using <code>array()</code> to recreate the same matrix as above; note that instead of specifying <code>nrow</code> and <code>ncol</code>, we just specify <code>dim</code> giving it a vector of number of rows and columns:</p>
+<pre class="sourceCode r"><code class="sourceCode r">mat &lt;-<span class="st"> </span><span class="kw">array</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>, <span class="dt">dim =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">5</span>))
+<span class="kw">print</span>(mat)</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    1    5    9   13   17
+## [2,]    2    6   10   14   18
+## [3,]    3    7   11   15   19
+## [4,]    4    8   12   16   20</code></pre>
+<p>Notice that R fills out the entries of the matrix (from the vector <code>1:20</code>) in a “fill columns first” (column-major) order. Python, by contrast (specifically <code>numpy</code>, the numeric-array package for Python), fills matrices in a “fill rows first” (row-major) order. Since the <code>keras</code> R library utilizes the <code>keras</code> Python library under the hood, it also provides a function that produces arrays this way:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(keras)
+mat &lt;-<span class="st"> </span><span class="kw">array_reshape</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>, <span class="dt">dim =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">5</span>))
+<span class="kw">print</span>(mat)</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    1    2    3    4    5
+## [2,]    6    7    8    9   10
+## [3,]   11   12   13   14   15
+## [4,]   16   17   18   19   20</code></pre>
+<p>Under the hood, matrices and arrays are stored a simple vectors, with the dimension sizes simply defining how indices such as <code>[3, 2]</code> are mapped to the underlying vector. This means that we can use functions that work on vectors with matrices and arrays, including <code>mean()</code>, <code>max()</code>, <code>min()</code>, etc., and recycling of values.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(mat <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(mat))  <span class="co"># mean(mat) is 10.5, this single value is recyled in the subtraction for all elements</span></code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,] -9.5 -8.5 -7.5 -6.5 -5.5
+## [2,] -4.5 -3.5 -2.5 -1.5 -0.5
+## [3,]  0.5  1.5  2.5  3.5  4.5
+## [4,]  5.5  6.5  7.5  8.5  9.5</code></pre>
+<p>Similarly, we can add, subtract, multiply, etc. matrices in an element-by-element fashion (which really only makes sense if they are the same “shape”).</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(mat <span class="op">+</span><span class="st"> </span>mat) <span class="co"># since the two matrices are the same shape, no recycling is needed</span></code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    2    4    6    8   10
+## [2,]   12   14   16   18   20
+## [3,]   22   24   26   28   30
+## [4,]   32   34   36   38   40</code></pre>
+<p>The <code>dim()</code> function returns the dimension sizes as a vector:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">dim</span>(mat)) </code></pre>
+<pre><code>## [1] 4 5</code></pre>
+<p>For completeness, here’s a 3d array with “depth” 5, “height” 3, and “width” 4 (though it’s not really import to remember which is “depth” or “width” or “height”). Note that we’re using <code>1:(3*4*5)</code> to generate a vector of numbers of the right length that get filled into the array. The printout is difficult to make sense of, but note that <code>34</code> is the entry at <code>[2, 3, 4]</code>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">mat &lt;-<span class="st"> </span><span class="kw">array_reshape</span>(<span class="dv">1</span><span class="op">:</span>(<span class="dv">3</span><span class="op">*</span><span class="dv">4</span><span class="op">*</span><span class="dv">5</span>), <span class="dt">dim =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>))
+<span class="kw">print</span>(mat)</code></pre>
+<pre><code>## , , 1
+## 
+##      [,1] [,2] [,3] [,4]
+## [1,]    1    6   11   16
+## [2,]   21   26   31   36
+## [3,]   41   46   51   56
+## 
+## , , 2
+## 
+##      [,1] [,2] [,3] [,4]
+## [1,]    2    7   12   17
+## [2,]   22   27   32   37
+## [3,]   42   47   52   57
+## 
+## , , 3
+## 
+##      [,1] [,2] [,3] [,4]
+## [1,]    3    8   13   18
+## [2,]   23   28   33   38
+## [3,]   43   48   53   58
+## 
+## , , 4
+## 
+##      [,1] [,2] [,3] [,4]
+## [1,]    4    9   14   19
+## [2,]   24   29   34   39
+## [3,]   44   49   54   59
+## 
+## , , 5
+## 
+##      [,1] [,2] [,3] [,4]
+## [1,]    5   10   15   20
+## [2,]   25   30   35   40
+## [3,]   45   50   55   60</code></pre>
+<p>Again, we’ll see more options for thinking about, visualizing, and working with arrays that are are 3-or-higher dimensional. But, we can still use our indexing tricks to get elements or sub arrays. We’ve supressed the printouts because these are so hard to make sense of anyway.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(mat[<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">4</span>])     <span class="co"># entry at index 3, 2, 4</span>
+<span class="kw">print</span>(mat[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">2</span><span class="op">:</span><span class="dv">4</span>, ])  <span class="co"># subarray from first dim indices 1 to 2, second dim from 2 to 4, and all third dim indices</span>
+<span class="kw">print</span>(mat[<span class="dv">1</span>, , ])       <span class="co"># only the first dim index; dimension will be dropped resulting in a 4x5</span>
+<span class="kw">print</span>(mat[<span class="dv">1</span>, , , <span class="dt">drop =</span> <span class="ot">FALSE</span>]) <span class="co"># same, but don&#39;t drop that dimension, resulting in a 1x4x5 array.</span></code></pre>
+<p><br />
+<br /></p>
+</div>
+<div id="named-matrices-arrays" class="section level2">
+<h2><span class="header-section-number">1.3</span> Named Matrices &amp; Arrays</h2>
+<p>Rows and columns of matrices (or dimensions of arrays) can be named. For example, we might record the favorite color
+of persons <code>p1</code>, <code>p2</code>, <code>p3</code>, and <code>p4</code> by storing the corresponding RGB values.<label for="tufte-sn-1" class="margin-toggle sidenote-number">1</label><input type="checkbox" id="tufte-sn-1" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">1</span> Image analysis is an important topic in
+deep learning, as is understanding how colors are encoded with RGB (red, green, blue) values. If you are unfamiliar, check out
+this <a href="http://geraldbakker.nl/psnumbers/rgb-explained.html">article</a>. While many systems encode R, G, and B values as integers in the range <code>0</code> to <code>155</code>, in some cases they are scaled to be between <code>0</code> and <code>1</code>.</span> We set these ‘dimension names’ with a list, which
+we’ll cover in the next section.</p>
+<pre class="sourceCode r"><code class="sourceCode r">fav_colors &lt;-<span class="st"> </span><span class="kw">array_reshape</span>(<span class="kw">runif</span>(<span class="dv">12</span>, <span class="dt">min =</span> <span class="dv">0</span>, <span class="dt">max =</span> <span class="dv">1</span>),
+                            <span class="dt">dim =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>))
+
+<span class="kw">dimnames</span>(fav_colors) &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="kw">c</span>(<span class="st">&quot;r&quot;</span>, <span class="st">&quot;g&quot;</span>, <span class="st">&quot;b&quot;</span>),
+                             <span class="kw">c</span>(<span class="st">&quot;p1&quot;</span>, <span class="st">&quot;p2&quot;</span>, <span class="st">&quot;p3&quot;</span>, <span class="st">&quot;p4&quot;</span>))
+
+<span class="kw">print</span>(fav_colors)</code></pre>
+<pre><code>##            p1        p2        p3        p4
+## r 0.219681405 0.5182694 0.4060091 0.8632333
+## g 0.888801520 0.9528577 0.1361891 0.5115021
+## b 0.002203003 0.7451993 0.9773836 0.5752088</code></pre>
+<p>This example also illustrates that when building complex lines of code, breaking them across multiple lines with indendentation
+can dramatically improve readability.</p>
+<p>This naming allows us to work with character vectors for subsetting, and we can mix and match selecting by index and name:</p>
+<pre class="sourceCode r"><code class="sourceCode r">p2_p4_r_g_colors &lt;-<span class="st"> </span>fav_colors[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="kw">c</span>(<span class="st">&quot;p2&quot;</span>, <span class="st">&quot;p4&quot;</span>)]  <span class="co"># first two rows, just the two columns</span>
+
+<span class="kw">print</span>(p2_p4_r_g_colors)</code></pre>
+<pre><code>##          p2        p4
+## r 0.5182694 0.8632333
+## g 0.9528577 0.5115021</code></pre>
+<p>Sometimes we only want to set dimension names for one of the dimensions, for example if we had hundreds of people and didn’t need
+to identify them, but definitely wanted to keep the R, G, and B values labeled. To do so we can use <code>NULL</code> for the dimensions we don’t want to name.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dimnames</span>(fav_colors) &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="kw">c</span>(<span class="st">&quot;r&quot;</span>, <span class="st">&quot;g&quot;</span>, <span class="st">&quot;b&quot;</span>),
+                             <span class="ot">NULL</span>)
+
+<span class="kw">print</span>(fav_colors)</code></pre>
+<pre><code>##          [,1]      [,2]      [,3]      [,4]
+## r 0.219681405 0.5182694 0.4060091 0.8632333
+## g 0.888801520 0.9528577 0.1361891 0.5115021
+## b 0.002203003 0.7451993 0.9773836 0.5752088</code></pre>
+<p><br />
+<br /></p>
+</div>
+<div id="lists" class="section level2">
+<h2><span class="header-section-number">1.4</span> Lists</h2>
+<p>Vectors, matrices, and arrays share a common limitation: they can’t mix datatypes, or “nest”. A numeric vector can only hold numbers, and vectors can’t store vectors (something like <code>c(c(1, 2), c(3, 4, 5)))</code> is converted to just <code>c(1, 2, 3, 4, 5)</code>). Lists, on the other hand,
+are <em>much</em> more flexible. Here’s one storing a numeric matrix, and a character vector:</p>
+<pre class="sourceCode r"><code class="sourceCode r">mat &lt;-<span class="st"> </span><span class="kw">array_reshape</span>(<span class="dv">1</span><span class="op">:</span>(<span class="dv">4</span><span class="op">*</span><span class="dv">5</span>), <span class="dt">dim =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">5</span>))
+people &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Joe&quot;</span>, <span class="st">&quot;Mary&quot;</span>, <span class="st">&quot;Sue&quot;</span>)
+
+datalist &lt;-<span class="st"> </span><span class="kw">list</span>(mat, people)</code></pre>
+<p>We can get access to individual list elements by index using <code>[[]]</code>-notation.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(datalist[[<span class="dv">1</span>]])</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    1    2    3    4    5
+## [2,]    6    7    8    9   10
+## [3,]   11   12   13   14   15
+## [4,]   16   17   18   19   20</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(datalist[[<span class="dv">2</span>]])</code></pre>
+<pre><code>## [1] &quot;Joe&quot;  &quot;Mary&quot; &quot;Sue&quot;</code></pre>
+<p>The <code>str()</code> function is a handy way to see the “structure” of a list or some other data type.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(datalist)</code></pre>
+<pre><code>## List of 2
+##  $ : num [1:4, 1:5] 1 6 11 16 2 7 12 17 3 8 ...
+##  $ : chr [1:3] &quot;Joe&quot; &quot;Mary&quot; &quot;Sue&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(people)</code></pre>
+<pre><code>##  chr [1:3] &quot;Joe&quot; &quot;Mary&quot; &quot;Sue&quot;</code></pre>
+<p>In normal R usage, we frequently “name” elements and access them by name, but this is less common when working with Keras (since Python also supports lists, but not named lists).</p>
+<pre class="sourceCode r"><code class="sourceCode r">named_datalist &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">matrix =</span> mat, <span class="dt">names =</span> people)
+<span class="kw">print</span>(named_datalist<span class="op">$</span>matrix)</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    1    2    3    4    5
+## [2,]    6    7    8    9   10
+## [3,]   11   12   13   14   15
+## [4,]   16   17   18   19   20</code></pre>
+<p><br />
+<br /></p>
+</div>
+<div id="data-frames" class="section level2">
+<h2><span class="header-section-number">1.5</span> Data Frames</h2>
+<p>Data frames are a special kind of named list, with each element representing a column. The main things that make data frames unique are 1) they enforce that the columns are all the same length, ensuring data frames act as tables, and 2) they are indexable by both row and column.</p>
+<p>We don’t use them too much when interacting with Keras, so hopefully a quick example suffices. In general, however, they are the main data structure for storing table-like data in R.</p>
+<pre class="sourceCode r"><code class="sourceCode r">names_vec &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Joe&quot;</span>, <span class="st">&quot;Kim&quot;</span>, <span class="st">&quot;Jerry&quot;</span>, <span class="st">&quot;Mike&quot;</span>, <span class="st">&quot;Sue&quot;</span>)
+ages_vec &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">23</span>, <span class="dv">42</span>, <span class="dv">51</span>, <span class="dv">23</span>, <span class="dv">35</span>)
+heights_vec &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">5.7</span>, <span class="fl">5.1</span>, <span class="fl">5.9</span>, <span class="fl">5.4</span>, <span class="fl">4.9</span>)
+
+people_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">name =</span> names_vec, <span class="dt">age =</span> ages_vec, <span class="dt">height =</span> heights_vec)
+<span class="kw">print</span>(people_df)</code></pre>
+<pre><code>##    name age height
+## 1   Joe  23    5.7
+## 2   Kim  42    5.1
+## 3 Jerry  51    5.9
+## 4  Mike  23    5.4
+## 5   Sue  35    4.9</code></pre>
+<p>We can select rows and/or columns using <code>[ , ]</code>-indexing similar to matrices,</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(people_df[<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">5</span>), ])  <span class="co"># rows two, four, and five; all columns</span></code></pre>
+<pre><code>##   name age height
+## 2  Kim  42    5.1
+## 4 Mike  23    5.4
+## 5  Sue  35    4.9</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(people_df[<span class="op">-</span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">5</span>), ]) <span class="co"># other rows, all columns</span></code></pre>
+<pre><code>##    name age height
+## 1   Joe  23    5.7
+## 3 Jerry  51    5.9</code></pre>
+<p>and we can extract individual columns like lists.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(people_df[[<span class="dv">2</span>]])   <span class="co"># second column (numeric vector)</span></code></pre>
+<pre><code>## [1] 23 42 51 23 35</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(people_df<span class="op">$</span>age)    <span class="co"># same (by name)</span></code></pre>
+<pre><code>## [1] 23 42 51 23 35</code></pre>
+<p>Be aware that the labels shown along the left-hand side are not row indices, but rather row “names” (initially “1”, “2”, “3”, etc.), which explains why they don’t change when we subset the data frame.</p>
+</div>
+<div id="for-loops" class="section level2">
+<h2><span class="header-section-number">1.6</span> For-loops</h2>
+<p>For-loops execute a <em>block</em> of code (within <code>{}</code>s) for each element of a vector or list.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>) { <span class="co"># for i in the vector c(1, 2, 3, 4)</span>
+  <span class="kw">print</span>(<span class="st">&quot;Printing!&quot;</span>)
+  <span class="kw">print</span>(i)
+}</code></pre>
+<pre><code>## [1] &quot;Printing!&quot;
+## [1] 1
+## [1] &quot;Printing!&quot;
+## [1] 2
+## [1] &quot;Printing!&quot;
+## [1] 3
+## [1] &quot;Printing!&quot;
+## [1] 4</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="cf">for</span>(element <span class="cf">in</span> datalist) {
+  <span class="kw">print</span>(<span class="st">&quot;Printing!&quot;</span>)
+  <span class="kw">print</span>(element)
+}</code></pre>
+<pre><code>## [1] &quot;Printing!&quot;
+##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    1    2    3    4    5
+## [2,]    6    7    8    9   10
+## [3,]   11   12   13   14   15
+## [4,]   16   17   18   19   20
+## [1] &quot;Printing!&quot;
+## [1] &quot;Joe&quot;  &quot;Mary&quot; &quot;Sue&quot;</code></pre>
+<p>Some feel that R for-loops are slow; in fact, they aren’t too bad. What <em>is</em> slow is “growing” a vector (or list) by adding elements on one-at-a-time with a loop.<label for="tufte-sn-2" class="margin-toggle sidenote-number">2</label><input type="checkbox" id="tufte-sn-2" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">2</span> Since vectors can’t “nest”, <code>c(some_vec, some_other_vec)</code> results in a concatenated single vector. Indeed, that is what <code>c</code> stands for–concatenate.</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">answer &lt;-<span class="st"> </span><span class="kw">c</span>()   <span class="co"># empty vector</span>
+
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">100</span>) { 
+  <span class="co"># append the log of i to the answer vector -- </span>
+  <span class="co"># SLOW, particularly when the answer vector grows to the tens of thousands</span>
+  answer &lt;-<span class="st"> </span><span class="kw">c</span>(answer, <span class="kw">log</span>(i)) 
+}
+
+<span class="kw">print</span>(answer)</code></pre>
+<pre><code>##   [1] 0.0000000 0.6931472 1.0986123 1.3862944 1.6094379 1.7917595 1.9459101
+##   [8] 2.0794415 2.1972246 2.3025851 2.3978953 2.4849066 2.5649494 2.6390573
+##  [15] 2.7080502 2.7725887 2.8332133 2.8903718 2.9444390 2.9957323 3.0445224
+##  [22] 3.0910425 3.1354942 3.1780538 3.2188758 3.2580965 3.2958369 3.3322045
+##  [29] 3.3672958 3.4011974 3.4339872 3.4657359 3.4965076 3.5263605 3.5553481
+##  [36] 3.5835189 3.6109179 3.6375862 3.6635616 3.6888795 3.7135721 3.7376696
+##  [43] 3.7612001 3.7841896 3.8066625 3.8286414 3.8501476 3.8712010 3.8918203
+##  [50] 3.9120230 3.9318256 3.9512437 3.9702919 3.9889840 4.0073332 4.0253517
+##  [57] 4.0430513 4.0604430 4.0775374 4.0943446 4.1108739 4.1271344 4.1431347
+##  [64] 4.1588831 4.1743873 4.1896547 4.2046926 4.2195077 4.2341065 4.2484952
+##  [71] 4.2626799 4.2766661 4.2904594 4.3040651 4.3174881 4.3307333 4.3438054
+##  [78] 4.3567088 4.3694479 4.3820266 4.3944492 4.4067192 4.4188406 4.4308168
+##  [85] 4.4426513 4.4543473 4.4659081 4.4773368 4.4886364 4.4998097 4.5108595
+##  [92] 4.5217886 4.5325995 4.5432948 4.5538769 4.5643482 4.5747110 4.5849675
+##  [99] 4.5951199 4.6051702</code></pre>
+<p><br />
+<br /></p>
+</div>
+<div id="functions" class="section level2">
+<h2><span class="header-section-number">1.7</span> Functions</h2>
+<p>Functions! They let us encapsulate functionality, taking parameters and returning some answer or value. Here’s one that adds its two inputs and returns the result.</p>
+<pre class="sourceCode r"><code class="sourceCode r">add_two_inputs &lt;-<span class="st"> </span><span class="cf">function</span>(a, b) {
+  answer &lt;-<span class="st"> </span>a <span class="op">+</span><span class="st"> </span>b
+  <span class="kw">return</span>(answer)
+}
+
+x &lt;-<span class="st"> </span><span class="dv">4</span>
+y &lt;-<span class="st"> </span><span class="dv">7</span>
+z &lt;-<span class="st"> </span><span class="kw">add_two_inputs</span>(x, y)
+<span class="kw">print</span>(z)</code></pre>
+<pre><code>## [1] 11</code></pre>
+<p>Functions can have default parameters; here’s one that raises the first input to the power of the second, but the default for the power is <code>2</code>.<label for="tufte-sn-3" class="margin-toggle sidenote-number">3</label><input type="checkbox" id="tufte-sn-3" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">3</span> If you aren’t familiar with R, try and figure out what <code>2 ^ c(3, 4)</code> will return based on the section above about Vectors, before trying the code.</span></p>
+<pre class="sourceCode r"><code class="sourceCode r">raise_to_power &lt;-<span class="st"> </span><span class="cf">function</span>(a, <span class="dt">pow =</span> <span class="dv">2</span>) {
+  answer &lt;-<span class="st"> </span>a <span class="op">^</span><span class="st"> </span>pow
+  <span class="kw">return</span>(answer)
+}
+
+x &lt;-<span class="st"> </span><span class="dv">3</span>
+p &lt;-<span class="st"> </span><span class="dv">4</span>
+<span class="kw">print</span>(<span class="kw">raise_to_power</span>(x, <span class="dt">pow =</span> p))   <span class="co"># 3 ^ 4</span></code></pre>
+<pre><code>## [1] 81</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">raise_to_power</span>(x))      <span class="co"># 3 ^ 2</span></code></pre>
+<pre><code>## [1] 9</code></pre>
+<p>There are <em>many</em> functions built into R, such as <code>abs()</code> (computes absolute value), <code>t()</code> (transposes a matrix), <code>as.data.frame()</code> (tries to convert its input into a data frame), and so on. To get help for a function like <code>abs()</code>, try running <code>help(&quot;abs&quot;)</code> or <code>?abs</code>; the help pages are useful as they describe the various parameters functions take, the default values for those parameters, and what is returned by the function.</p>
+<p><br />
+<br /></p>
+</div>
+<div id="higher-order-functions" class="section level2">
+<h2><span class="header-section-number">1.8</span> Higher-Order Functions</h2>
+<p>This section is a bit advanced, but we may run into some of these concepts (if we do, we’ll review them at that point as well). Functions are data like any other; consider the result of <code>print(raise_to_power)</code>, which reveals that <code>raise_to_power</code> is a variable that stores the function code itself:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(raise_to_power)</code></pre>
+<pre><code>## function(a, pow = 2) {
+##   answer &lt;- a ^ pow
+##   return(answer)
+## }</code></pre>
+<p>This means we can pass functions around as parameters to functions. Here’s another function that multiplies two values:</p>
+<pre class="sourceCode r"><code class="sourceCode r">multiply_by &lt;-<span class="st"> </span><span class="cf">function</span>(a, b) {
+  answer &lt;-<span class="st"> </span>a <span class="op">*</span><span class="st"> </span>b
+  <span class="kw">return</span>(answer)
+}
+
+<span class="kw">print</span>(<span class="kw">multiply_by</span>(<span class="dv">3</span>, <span class="dv">4</span>))</code></pre>
+<pre><code>## [1] 12</code></pre>
+<p>Easy enough. Here’s a function that takes <em>three</em> parameters: two numbers, and a function to call on them:</p>
+<pre class="sourceCode r"><code class="sourceCode r">call_on &lt;-<span class="st"> </span><span class="cf">function</span>(a, b, func) {
+  answer &lt;-<span class="st"> </span><span class="kw">func</span>(a, b)
+  <span class="kw">return</span>(answer)
+}</code></pre>
+<p>This lets us use the <code>call_on</code> “higher level” function to call one of the two others.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">call_on</span>(<span class="dv">4</span>, <span class="dv">7</span>, raise_to_power))</code></pre>
+<pre><code>## [1] 16384</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">call_on</span>(<span class="dv">4</span>, <span class="dv">7</span>, multiply_by))</code></pre>
+<pre><code>## [1] 28</code></pre>
+<p>R uses higher-level functions quite a bit. For example, we can apply a function to each element of a list, by calling the <code>lapply()</code> function giving a list of things to call a function on, and the function to call on each:</p>
+<pre class="sourceCode r"><code class="sourceCode r">sample1 &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">3</span>, <span class="dt">sd =</span> <span class="dv">1</span>)   <span class="co"># length-10 vec, nums sampled from normal dist</span>
+sample2 &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">5</span>, <span class="dt">sd =</span> <span class="dv">1</span>)   <span class="co"># sampled with mean 5</span>
+sample3 &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">15</span>, <span class="dt">sd =</span> <span class="dv">1</span>)  <span class="co"># sampled with mean 15</span>
+
+samples &lt;-<span class="st"> </span><span class="kw">list</span>(sample1, sample2, sample3)  <span class="co"># a list containing the three vectors</span>
+
+means &lt;-<span class="st"> </span><span class="kw">lapply</span>(samples, mean)              <span class="co"># call the mean function on each element of samples</span></code></pre>
+<p>The result of <code>lapply()</code> is a list of the results of the function calls.<label for="tufte-sn-4" class="margin-toggle sidenote-number">4</label><input type="checkbox" id="tufte-sn-4" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">4</span> Because building result vectors or lists with for-loops is slow, “functional” approaches such as these are emphasized in R for efficiently performing repeated computations.</span></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(means[[<span class="dv">1</span>]])</code></pre>
+<pre><code>## [1] 3.13386</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(means[[<span class="dv">2</span>]])</code></pre>
+<pre><code>## [1] 4.882351</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(means[[<span class="dv">3</span>]])</code></pre>
+<pre><code>## [1] 15.28237</code></pre>
+<p>Functions can also <em>return</em> functions; usually the returned function is defined inside. Here’s one that returns a function that prints a message, taking as a parameter the name to greet.</p>
+<pre class="sourceCode r"><code class="sourceCode r">get_greeting_function &lt;-<span class="st"> </span><span class="cf">function</span>(name) {
+  
+  greeting_function &lt;-<span class="st"> </span><span class="cf">function</span>() {
+    <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;Hello&quot;</span>, name, <span class="dt">sep =</span> <span class="st">&quot; &quot;</span>))
+  }
+  
+  <span class="kw">return</span>(greeting_function)
+}</code></pre>
+<p>Notice that the function that is returned takes no parameters - but it refers to the <code>name</code> parameter that is passed in to the function that created it. This ‘binds’ the name for the returned function to whatever was given, and each returned function can have independent bindings.</p>
+<pre class="sourceCode r"><code class="sourceCode r">sayhi1 &lt;-<span class="st"> </span><span class="kw">get_greeting_function</span>(<span class="st">&quot;Joe&quot;</span>)
+<span class="kw">sayhi1</span>()</code></pre>
+<pre><code>## [1] &quot;Hello Joe&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">sayhi2 &lt;-<span class="st"> </span><span class="kw">get_greeting_function</span>(<span class="st">&quot;Jerry&quot;</span>)
+<span class="kw">sayhi2</span>()</code></pre>
+<pre><code>## [1] &quot;Hello Jerry&quot;</code></pre>
+<p>This gets particularly useful when using the “super-assigner” <code>&lt;&lt;-</code>, which assigns to variables defined “outside” a particular function.</p>
+<pre class="sourceCode r"><code class="sourceCode r">create_counter_func &lt;-<span class="st"> </span><span class="cf">function</span>() {
+  counter &lt;-<span class="st"> </span><span class="dv">0</span>
+  
+  counter_func &lt;-<span class="st"> </span><span class="cf">function</span>() {
+    counter &lt;&lt;-<span class="st"> </span>counter <span class="op">+</span><span class="st"> </span><span class="dv">1</span>
+    <span class="kw">return</span>(counter)
+  }
+  
+  <span class="kw">return</span>(counter_func)
+}</code></pre>
+<p>Here’s what will happen: when we call <code>create_counter_func()</code> it will create a <code>counter</code> variable, and a <code>counter_func</code> that can access the counter through binding; whenever the returned function is called, it updates the variable through the binding before returning it. As a result, each call of the returned function returns the next larger integer.</p>
+<pre class="sourceCode r"><code class="sourceCode r">counter1 &lt;-<span class="st"> </span><span class="kw">create_counter_func</span>()
+<span class="kw">print</span>(<span class="kw">counter1</span>()) <span class="co"># returns 1</span></code></pre>
+<pre><code>## [1] 1</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">counter1</span>()) <span class="co"># returns 2</span></code></pre>
+<pre><code>## [1] 2</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">counter1</span>()) <span class="co"># returns 3</span></code></pre>
+<pre><code>## [1] 3</code></pre>
+<p>Because new counter variables are independently created by <code>create_counter_func()</code>, we can have multiple such counter functions:</p>
+<pre class="sourceCode r"><code class="sourceCode r">counter2 &lt;-<span class="st"> </span><span class="kw">create_counter_func</span>()
+<span class="kw">print</span>(<span class="kw">counter2</span>()) <span class="co"># returns 1</span></code></pre>
+<pre><code>## [1] 1</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">counter1</span>()) <span class="co"># returns 4</span></code></pre>
+<pre><code>## [1] 4</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">counter2</span>()) <span class="co"># returns 2</span></code></pre>
+<pre><code>## [1] 2</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">counter1</span>()) <span class="co"># returns 5</span></code></pre>
+<pre><code>## [1] 5</code></pre>
+<p>A function like this, that returns the item in some kind of sequence with each call, is known as a <em>generator</em> function.</p>
+<p><br />
+<br /></p>
+</div>
+<div id="ggplot2" class="section level2">
+<h2><span class="header-section-number">1.9</span> ggplot2</h2>
+<p>ggplot2 is a popular library for generating plots. If you aren’t familiar, know that it has its own specialized syntax for generating plots (it implements a “domain specific language”, or DSL), and only plots data present in data frames.</p>
+<p>We’ll be mostly using it to plot tiles-plots or heatmaps. Here’s what an example dataframe might look like:</p>
+<pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">xloc =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>),
+                 <span class="dt">yloc =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>),
+                 <span class="dt">val =</span> <span class="kw">rnorm</span>(<span class="dv">12</span>, <span class="dt">mean =</span> <span class="dv">30</span>))
+<span class="kw">print</span>(df)</code></pre>
+<pre><code>##    xloc yloc      val
+## 1     1    1 28.70271
+## 2     1    2 31.90660
+## 3     1    3 29.75268
+## 4     1    4 27.45655
+## 5     2    1 30.11977
+## 6     2    2 30.98402
+## 7     2    3 31.49474
+## 8     2    4 31.51789
+## 9     3    1 30.23925
+## 10    3    2 31.39892
+## 11    3    3 29.35064
+## 12    3    4 32.02561</code></pre>
+<p>And here’s a plot showing these values as a tileplot:</p>
+<p>
+<span class="marginnote shownote">
+<!--
+<div class="figure">-->
+<img src="index.html_files/figure-html/unnamed-chunk-47-1.png" alt=" " width="672"  />
+<!--
+<p class="caption marginnote">--> <!--</p>-->
+<!--</div>--></span>
+</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
+<span class="kw">ggplot</span>() <span class="op">+</span>
+<span class="st">  </span><span class="co"># plot a layer with data from the df dataframe</span>
+<span class="st">  </span><span class="kw">geom_tile</span>(<span class="dt">data =</span> df,
+            <span class="co"># map column data to what is drawn</span>
+            <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> xloc, <span class="dt">y =</span> yloc, <span class="dt">fill =</span> val)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="co"># don&#39;t stretch axes, keep them the same relative size</span>
+<span class="st">  </span><span class="kw">coord_equal</span>() <span class="op">+</span><span class="st">       </span>
+<span class="st">  </span><span class="co"># make font size a little bigger</span>
+<span class="st">  </span><span class="kw">theme_gray</span>(<span class="dv">18</span>)        </code></pre>
+<p><br />
+<br /></p>
+</div>
+<div id="the-operator" class="section level2">
+<h2><span class="header-section-number">1.10</span> The <code>%&gt;%</code> operator</h2>
+<p>The <code>%&gt;%</code> operator is a powerful tool introduced by the <code>magrittr</code> package and utilized by many modern R users and packages, including <code>keras</code>. In order to use it most effectively, it helps to understand exactly what it does.</p>
+<p>First, it’s not uncommon to run data through a number of different functions. Suppose we have a vector of some numbers,</p>
+<pre class="sourceCode r"><code class="sourceCode r">vals &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="fl">3.9</span>, <span class="fl">3.1</span>, <span class="dv">2</span>, <span class="fl">1.4</span>, <span class="dv">7</span>, <span class="fl">-4.5</span>, <span class="fl">2.7</span>)</code></pre>
+<p>and we want to compute sum of the cubes of the absolute values of the numbers. We could do so with a sequence of calls (intermediate printouts added for clarity).</p>
+<pre class="sourceCode r"><code class="sourceCode r">absolutes &lt;-<span class="st"> </span><span class="kw">abs</span>(vals)                  <span class="co"># take absolute values</span>
+<span class="kw">print</span>(absolutes)</code></pre>
+<pre><code>## [1] 3.9 3.1 2.0 1.4 7.0 4.5 2.7</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">cubes &lt;-<span class="st"> </span><span class="kw">raise_to_power</span>(absolutes, <span class="dv">3</span>)   <span class="co"># cube each</span>
+<span class="kw">print</span>(cubes)</code></pre>
+<pre><code>## [1]  59.319  29.791   8.000   2.744 343.000  91.125  19.683</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">total &lt;-<span class="st"> </span><span class="kw">sum</span>(cubes)                     <span class="co"># compute sum</span>
+<span class="kw">print</span>(total)</code></pre>
+<pre><code>## [1] 553.662</code></pre>
+<p>Alternatively, we could just nest the function calls appropriately.</p>
+<pre class="sourceCode r"><code class="sourceCode r">total &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">raise_to_power</span>(<span class="kw">abs</span>(vals), <span class="dv">3</span>))</code></pre>
+<p>This can quickly become unweildy, particularly when we have secondary arguments to functions as we do here with <code>raise_to_power()</code>. The <code>%&gt;%</code> operator is made to help with this, but first it helps to understand very simple usage of <code>%&gt;%</code>, and then it helps to understand a bit about <em>associativity</em>.</p>
+<p>For a basic use of <code>%&gt;%</code>, first we need to load the <code>magrittr</code> library, or some library that loads it, like <code>keras</code>. What the operator does is pass the result of the left hand side <em>as the first parameter</em> to the function specified on the right hand side. So, rather than <code>absolutes &lt;- abs(vals)</code>, we can</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(keras)
+
+absolutes &lt;-<span class="st"> </span>vals <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">abs</span>()</code></pre>
+<p>This works even if what is on the left-hand side is the result of a function call, and even if the right-hand side takes secondary arguments. In this line the result of <code>abs(vals)</code> is sent as the first argument to <code>raise_to_power</code>; any other arguments (here 3) are passed after that first argument.</p>
+<pre class="sourceCode r"><code class="sourceCode r">cubes &lt;-<span class="st"> </span><span class="kw">abs</span>(vals) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">raise_to_power</span>(<span class="dv">3</span>) <span class="co"># the </span></code></pre>
+<p>Now, on to associativity: you are likely familiar with the fact that addition and multiplicaton are <em>associative</em>: <code>a + b + c + d</code> is the same as <code>a + (b + (c + d))</code> which is the same as <code>((a + b) + c) + d</code>.</p>
+<p>Some operators, like division, are only <em>left-associative</em>; for example, when we say <code>a / b / c / d</code> the correct computation is <code>((a / b) / c) / d</code>. By contrast, powers are <em>right-associative</em>; <code>a ^ b ^ c ^ d</code> needs to be computed as <code>a ^ (b ^ (c ^ d))</code>.</p>
+<p>Going back to <code>%&gt;%</code>, we can chain the usage for our computation. Here’s an alternative method of computing it:</p>
+<pre class="sourceCode r"><code class="sourceCode r">total &lt;-<span class="st"> </span>vals <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">abs</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">raise_to_power</span>(<span class="dv">3</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sum</span>()</code></pre>
+<p>It’s common to break such long lines:</p>
+<pre class="sourceCode r"><code class="sourceCode r">total &lt;-<span class="st"> </span>vals <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">abs</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">raise_to_power</span>(<span class="dv">3</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">sum</span>()
+
+<span class="kw">print</span>(total)</code></pre>
+<pre><code>## [1] 553.662</code></pre>
+<p>The reason this works so nicely is that <code>%&gt;%</code> is emplemented as a left-associative operator! When parenthesized the computation works like</p>
+<pre class="sourceCode r"><code class="sourceCode r">total &lt;-<span class="st"> </span>((vals <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">abs</span>()) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">raise_to_power</span>(<span class="dv">3</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sum</span>()</code></pre>
+<p>More succinctly, <code>a %&gt;% b %&gt;% c %&gt;% d</code> becomes <code>((a %&gt;% b) %&gt;% c) %&gt;% d</code> (where <code>a</code>, <code>b</code>, <code>c</code>, and <code>d</code> are actually function calls). Thus, <code>%&gt;%</code> always gets the fully computed value for the left side before passing it to the right side, effectively make it read like “<code>vals</code>, then <code>abs()</code>, then <code>raise_to_power(3)</code>, then <code>sum()</code>.”</p>
+<p>The use of <code>%&gt;%</code> in R coding has grown rapidly because it makes R code shorter and more readable.</p>
+
+</div>
+</div>
+<p style="text-align: center;">
+</p>
+</div>
+</div>
+
+
+
+</body>
+</html>

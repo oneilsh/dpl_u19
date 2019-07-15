@@ -1,0 +1,21 @@
+---
+title: "Deep Learning for Life Scientists"
+subtitle: "Notes, CGRB Workshop, July/August 2019"
+author: "Shawn T. O'Neil"
+date: "2019"
+output:
+  bookdown::tufte_html_book:
+    split_by: chapter
+    css: tufte_mods.css
+    tufte_features: ["fonts", "background", "italics"]
+    toc: no
+---
+
+
+```{js}
+// this no worky
+//$("#TOC").on("mouseover", function() {
+//  console.log("That tickles!");
+//  $("#TOC").find("li").find("ul").addClass('permahover');
+//});
+```

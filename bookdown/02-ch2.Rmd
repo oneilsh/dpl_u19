@@ -1,0 +1,274 @@
+# Chapter 2
+
+This is chapter 2.
+
+
+
+```{text echo=FALSE}
+  library(svglite)
+  #library(lattice)
+  library(ggplot2)
+  #library(rvest) 
+  #library(reshape2)
+  #library(dplyr)
+  #library(htmlwidgets)
+  library(slickR)
+  library(xml2)
+
+plotsToSVG=list(
+  #ggplot
+    xmlSVG({show(ggplot(iris,aes(x=Sepal.Length,y=Sepal.Width,colour=Species))+
+                   geom_point())},standalone=TRUE), 
+    xmlSVG({show(ggplot(iris,aes(x=Sepal.Length,y=Sepal.Width,colour=Sepal.Width))+
+                   geom_point())},standalone=TRUE), 
+    xmlSVG({show(ggplot(iris,aes(x=Sepal.Length,y=Sepal.Width,colour=Sepal.Length))+
+                   geom_point())},standalone=TRUE) 
+)
+
+#make the plot self contained SVG to pass into slickR 
+s.in=sapply(plotsToSVG,function(sv){paste0("data:image/svg+xml;utf8,",as.character(sv))})
+
+slickR(s.in,slideId = 'ex4',slickOpts = list(dots=T), height = 200,width = '100%')
+```
+
+
+
+```{r echo=FALSE} 
+readImage=function(fL){
+  mType=substring(fL,first=regexpr("\\.[^\\.]*$", fL)+1)
+  if(mType=='svg'){
+    if(!grepl('xml',readLines(fL,n = 1))) stop('svg not standalone')
+    paste0(
+      "data:image/svg+xml;utf8,"
+      ,as.character(xml2::read_xml(fL))
+    )
+  }else{
+    base64enc::dataURI(file = fL,mime = sprintf('image/%s',mType))  
+  }
+} 
+
+style_widget <- function(hw=NULL, style="", addl_selector="") {
+  stopifnot(!is.null(hw), inherits(hw, "htmlwidget"))
+  
+  # use current id of htmlwidget if already specified
+  elementId <- hw$elementId
+  if(is.null(elementId)) {
+    # borrow htmlwidgets unique id creator
+    elementId <- sprintf(
+      'htmlwidget-%s',
+      createWidgetId()
+    )
+    hw$elementId <- elementId
+  }
+  htmlwidgets::prependContent(
+    hw,
+    htmltools::tags$style(
+      sprintf(
+        "#%s %s {%s}",
+        elementId,
+        addl_selector,
+        style
+      )
+    )
+  )
+}
+
+createWidgetId <- 
+function (bytes = 10) 
+{
+  sysSeed <- .GlobalEnv$.Random.seed
+  if (!is.null(.globals$idSeed)) {
+    .GlobalEnv$.Random.seed <- .globals$idSeed
+  }
+  on.exit({
+    .globals$idSeed <- .GlobalEnv$.Random.seed
+    .GlobalEnv$.Random.seed <- sysSeed
+  })
+  paste(format(as.hexmode(sample(256, bytes, replace = TRUE) - 
+                            1), width = 2), collapse = "")
+}
+
+environment(createWidgetId)=asNamespace('htmlwidgets')
+
+slickR <- function(obj ,
+                   slideId='baseDiv',
+                   slideIdx=list(1:length(obj)),
+                   objLinks=c(1:length(obj)),
+                   slideType=c('img'),
+                   slickOpts=list(dots=TRUE),
+                   synchSlides=NULL,
+                   padding=rep('1%',length(obj)),
+                   dotObj=NULL,
+                   width = NULL, 
+                   height = NULL,
+                   elementId = NULL) {
+
+  
+  if(!is.character(obj)) stop('obj must be a character vector')
+  
+  obj <- lapply(obj,function(x){
+    if(!grepl('www[.]|http|https|data:image/|body|^<p',x)) x <- readImage(x)
+    x
+  })
+  
+  if(length(slideId)!=length(slideIdx)) slideId=paste0('baseDiv',1:length(slideId))
+  
+  x = vector('list',length(slideIdx))
+  
+  for(xId in 1:length(x)){
+    
+    if(length(x[[xId]]$obj)>1) x[[xId]]$obj=unlist(x[[xId]]$obj)
+    
+    x[[xId]]$divName <- slideId[xId]
+    x[[xId]]$links <- objLinks[xId]
+    x[[xId]]$divType <- slideType[[xId]]
+    x[[xId]]$padding <- paste0(100-as.numeric(gsub('%','',padding[[xId]])),'%')
+    
+    if(slideType[[xId]]=='p')
+      obj[slideIdx[[xId]]] <- gsub('^<p>|</p>$','',obj[slideIdx[[xId]]])
+    
+    x[[xId]]$obj <- obj[slideIdx[[xId]]]
+    
+    if(length(slickOpts)>0){
+      if(all(sapply(slickOpts,class)=='list')){
+        sOL <- slickOpts[[xId]]
+      }else{
+        sOL <- slickOpts
+      } 
+
+      if(!is.null(synchSlides))
+        sOL$asNavFor <- sprintf(".%s",synchSlides[!(synchSlides%in%slideId[xId])])
+      
+    
+      if(!is.null(dotObj)) x[[xId]]$dotObj <- dotObj
+      
+      if(!is.null(sOL[[1]])) x[[xId]]$slickOpts <- sOL
+    }
+  }
+
+  # forward options using x
+  
+  # create widget
+  hw <- htmlwidgets::createWidget(
+    name = 'slickR',
+    x,
+    width = width,
+    height = height,
+    package = 'slickR',
+    elementId = elementId
+  )
+  
+  style_widget(hw=hw, "margin-left:10%;margin-right:auto")
+}
+```
+
+
+
+```{r echo=FALSE}
+  library(svglite)
+  #library(lattice)
+  library(ggplot2)
+  #library(rvest) 
+  #library(reshape2)
+  #library(dplyr)
+  #library(htmlwidgets)
+  library(slickR)
+  library(xml2)
+
+slickR(c("images/output-0.png", 
+         "images/output-1.png",
+         "images/output-2.png",
+         "images/output-3.png"), 
+       slideId = 'ex4',
+       elementId = 'leftwardID',
+       slickOpts = list(dots=T, 
+                        fade=T, 
+                        infinite=F, 
+                        cssEase="linear"),
+       height = 250, 
+       width = '40%')
+
+```
+
+
+```{text echo=FALSE}
+$('.title').css('color', 'red')
+```
+
+
+```{r}
+num_vec <- c(1.3, 2.3, 3.3, 4.3, 5.3)
+char_vec <- c("one", "second el", "third", "four", "fifth") 
+char_vec2 <- c("testing!")
+log_vec <- c(TRUE, FALSE, TRUE, FALSE, FALSE)
+```
+
+```{r echo=FALSE}
+library(diffRgit)
+
+l_diff <- "diff --git a/../diff2widget/file1 b/../diff2widget/file2\nindex ab63d51..eb01961 100644\n--- a/../diff2widget/file1\n+++ b/../diff2widget/file2\n@@ -1,5 +1,4 @@\n-hello!\n+hello world!\n Where is Bryan?\n+Bryan is in the kitchen.\n bye!\n-\n-oups!"
+
+l_diff <- '
+diff --git a/bookdown/01-background.Rmd b/bookdown/01-background.Rmdsdf
+index 838cd20..ce6be90 100644sdf
+--- a/bookdown/01-background.Rmdsdf
++++ b/bookdown/01-background.Rmdsdf
+@@ -15,6 +15,7 @@ 
+ a `character` vector (which actually stores multi-character stringsas elements)
+ num_vec <- c(1.3, 2.3, 3.3, 4.3, 5.3)
+-char_vec <- c("one", "second el", "third", "four", "fifth")
++char_vec2 <- c("testing!")
+ log_vec <- c(TRUE, FALSE, TRUE, FALSE, FALSE)
++char_vec2 <- c("testing!")
+'
+
+diffRgit(l_diff, outputFormat="line-by-line", matching="none")
+```
+
+
+## sub
+
+lskdjf
+
+## sub2
+
+sldkf
+
+## sub3
+
+sldkfj
+
+## sub4
+
+SDflskdjf
+
+## sub5
+
+sdlfkj
+
+## sub6
+
+
+# Chapter 3
+
+## sub
+
+lskdjf
+
+## sub2
+
+sldkf
+
+## sub3
+
+sldkfj
+
+## sub4
+
+SDflskdjf
+
+## sub5
+
+sdlfkj
+
+## sub6

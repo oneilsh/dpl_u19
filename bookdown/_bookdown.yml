@@ -1,0 +1,3 @@
+rmd_files: ["index.Rmd", "01-background.Rmd"]
+delete_merged_file: true
+book_filename: "index.html"

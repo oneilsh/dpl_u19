@@ -1,0 +1,574 @@
+# R Background
+
+This doc assumes some familiarity with R, serving mostly as a refresher for basic concepts and introduction to more advanced concepts that come in handy when using the `keras` library for deep learning. 
+
+<br />
+<br />
+
+## Vectors
+
+Vectors are the most basic type of data in R; here are three vectors of length 5, one a `numeric` vector, one
+a `character` vector (which actually stores multi-character strings as elements), and one a `logical` vector: 
+
+
+
+```{r}
+num_vec <- c(1.3, 2.3, 3.3, 4.3, 5.3)
+char_vec <- c("one", "second el", "third", "four", "fifth") 
+char_vec2 <- c("testing!")
+log_vec <- c(TRUE, FALSE, TRUE, FALSE, FALSE)
+```
+
+Something like `answer <- 42` actually produces a length-one numeric vector, equivalent to `answer <- c(42)`. 
+
+When performing operations (like `+`, `*`, `==`, `>`, etc.) on two vectors, they will be compared element-by-element.
+
+```{r}
+print(num_vec * c(10, 100, 1000, 10000, 100000))
+```
+
+If one is shorter, it will be "recycled" in the comparison (with a warning if the shorter vector wasn't recycled evenly), even if the shorter vector is of length 1:
+
+```{r}
+print(num_vec * c(10, -10))
+print(num_vec * 10)
+```
+
+We can index into vectors with other vectors; for example we might want to extract the second and fifth entries of `num_vec`:
+
+```{r}
+selected <- num_vec[c(2, 5)]
+print(selected)
+```
+
+We can use shortcut syntax like `2:5` to produce the vector `c(2, 3, 4, 5)`. This can be handy, for example, to get the second through the fifth element of another vector:
+
+```{r}
+selected <- num_vec[2:5]
+print(selected)
+```
+
+Lastly, of occasional use, we can negate a vector to grab indices *other than* those specified.
+
+```{r}
+selected <- num_vec[-c(2, 5)]   # get indices 1, 3, 4
+print(selected)
+```
+
+Sometimes we want to print a message, rather than just a vector. The `paste()` function helps with this. First though, let's see it's "intended" usage of element-by-element pasting.
+
+```{r}
+first_names <- c("Joe", "Kim")
+last_names <- c("Montana", "Jong-un")
+
+suspects <- paste(last_names, first_names, sep = ", ")
+print(suspects)
+```
+
+For writing simple messages, the inputs are frequently just length-1 vectors:
+
+```{r}
+age <- 27
+print(paste("Joe is", age, "years old.", sep = " "))
+```
+
+
+<br />
+<br />
+
+
+## Matrices & Arrays
+
+R natively supports matrices; here's how we can create a 4 by 5 matrix built from the numbers 1 through 20:
+
+```{r}
+mat <- matrix(1:20, nrow = 4, ncol = 5)
+print(mat)
+```
+
+As the printout hints at, we can get at individual entries or sub-matrices with a `[row, col]` syntax.
+
+```{r}
+print(mat[3, 4])       # entry in row 3, column 4
+print(mat[1:2, 3:5])   # rows 1 and 2, cols 3 through 5
+print(mat[, 3:5])      # all rows, columns 3 through 5
+```
+
+
+A special note: in R, if what would be returned is a "lower dimension", the result will be a smaller-dimensional type.
+For example, if we request all rows, column 4, then what is returned is *not* a 4 by 1 matrix, but rather a *vector*
+representing the fourth column.
+
+```{r}
+print(mat[, 4])         # all rows, fourth column
+```
+
+
+To avoid this dropping, we can add a `, drop = FALSE` to the subsetting:
+
+```{r}
+print(mat[, 4, drop = FALSE])         # all rows, fourth column, don't drop dimension
+```
+
+
+R also supports higher-dimensional arrays with the ``array()`` function. These get difficult to visualize, so for now
+we'll just illustrate using ``array()`` to recreate the same matrix as above; note that instead of specifying `nrow` and `ncol`, we just specify `dim` giving it a vector of number of rows and columns:
+
+```{r}
+mat <- array(1:20, dim = c(4, 5))
+print(mat)
+```
+
+
+Notice that R fills out the entries of the matrix (from the vector `1:20`) in a "fill columns first" (column-major) order. Python, by contrast (specifically `numpy`, the numeric-array package for Python), fills matrices in a "fill rows first" (row-major) order. Since the `keras` R library utilizes the `keras` Python library under the hood, it also provides a function that produces arrays this way:
+
+```{r}
+library(keras)
+mat <- array_reshape(1:20, dim = c(4, 5))
+print(mat)
+```
+
+Under the hood, matrices and arrays are stored a simple vectors, with the dimension sizes simply defining how indices such as `[3, 2]` are mapped to the underlying vector. This means that we can use functions that work on vectors with matrices and arrays, including `mean()`, `max()`, `min()`, etc., and recycling of values. 
+
+```{r}
+print(mat - mean(mat))  # mean(mat) is 10.5, this single value is recyled in the subtraction for all elements
+```
+
+Similarly, we can add, subtract, multiply, etc. matrices in an element-by-element fashion (which really only makes sense if they are the same "shape").
+
+```{r}
+print(mat + mat) # since the two matrices are the same shape, no recycling is needed
+```
+
+The `dim()` function returns the dimension sizes as a vector:
+
+```{r}
+print(dim(mat)) 
+```
+
+For completeness, here's a 3d array with "depth" 5, "height" 3, and "width" 4 (though it's not really import to remember which is "depth" or "width" or "height"). Note that we're using `1:(3*4*5)` to generate a vector of numbers of the right length that get filled into the array. The printout is difficult to make sense of, but note that `34` is the entry at `[2, 3, 4]`.
+
+```{r}
+mat <- array_reshape(1:(3*4*5), dim = c(3, 4, 5))
+print(mat)
+```
+
+
+Again, we'll see more options for thinking about, visualizing, and working with arrays that are are 3-or-higher dimensional. But, we can still use our indexing tricks to get elements or sub arrays. We've supressed the printouts because these are so hard to make sense of anyway. 
+
+```{r eval=FALSE}
+print(mat[3, 2, 4])     # entry at index 3, 2, 4
+print(mat[1:2, 2:4, ])  # subarray from first dim indices 1 to 2, second dim from 2 to 4, and all third dim indices
+print(mat[1, , ])       # only the first dim index; dimension will be dropped resulting in a 4x5
+print(mat[1, , , drop = FALSE]) # same, but don't drop that dimension, resulting in a 1x4x5 array.
+```
+
+
+<br />
+<br />
+
+
+## Named Matrices & Arrays
+
+Rows and columns of matrices (or dimensions of arrays) can be named. For example, we might record the favorite color
+of persons `p1`, `p2`, `p3`, and `p4` by storing the corresponding RGB values.^[Image analysis is an important topic in 
+deep learning, as is understanding how colors are encoded with RGB (red, green, blue) values. If you are unfamiliar, check out 
+this [article](http://geraldbakker.nl/psnumbers/rgb-explained.html). While many systems encode R, G, and B values as integers in the range `0` to `155`, in some cases they are scaled to be between `0` and `1`.] We set these 'dimension names' with a list, which
+we'll cover in the next section.
+
+```{r}
+fav_colors <- array_reshape(runif(12, min = 0, max = 1),
+                            dim = c(3, 4))
+
+dimnames(fav_colors) <- list(c("r", "g", "b"),
+                             c("p1", "p2", "p3", "p4"))
+
+print(fav_colors)
+```
+
+This example also illustrates that when building complex lines of code, breaking them across multiple lines with indendentation 
+can dramatically improve readability.
+
+This naming allows us to work with character vectors for subsetting, and we can mix and match selecting by index and name:
+
+
+```{r}
+p2_p4_r_g_colors <- fav_colors[1:2, c("p2", "p4")]  # first two rows, just the two columns
+
+print(p2_p4_r_g_colors)
+```
+
+Sometimes we only want to set dimension names for one of the dimensions, for example if we had hundreds of people and didn't need
+to identify them, but definitely wanted to keep the R, G, and B values labeled. To do so we can use `NULL` for the dimensions we don't want to name.
+
+```{r}
+dimnames(fav_colors) <- list(c("r", "g", "b"),
+                             NULL)
+
+print(fav_colors)
+```
+
+
+<br />
+<br />
+
+
+## Lists
+
+Vectors, matrices, and arrays share a common limitation: they can't mix datatypes, or "nest". A numeric vector can only hold numbers, and vectors can't store vectors (something like `c(c(1, 2), c(3, 4, 5)))` is converted to just `c(1, 2, 3, 4, 5)`). Lists, on the other hand,
+are *much* more flexible. Here's one storing a numeric matrix, and a character vector:
+
+```{r}
+mat <- array_reshape(1:(4*5), dim = c(4, 5))
+people <- c("Joe", "Mary", "Sue")
+
+datalist <- list(mat, people)
+```
+
+We can get access to individual list elements by index using ``[[]]``-notation.
+
+```{r}
+print(datalist[[1]])
+print(datalist[[2]])
+```
+
+The `str()` function is a handy way to see the "structure" of a list or some other data type.
+
+```{r}
+str(datalist)
+str(people)
+```
+
+In normal R usage, we frequently "name" elements and access them by name, but this is less common when working with Keras (since Python also supports lists, but not named lists).
+
+```{r}
+named_datalist <- list(matrix = mat, names = people)
+print(named_datalist$matrix)
+```
+
+<br />
+<br />
+
+## Data Frames
+
+Data frames are a special kind of named list, with each element representing a column. The main things that make data frames unique are 1) they enforce that the columns are all the same length, ensuring data frames act as tables, and 2) they are indexable by both row and column.
+
+We don't use them too much when interacting with Keras, so hopefully a quick example suffices. In general, however, they are the main data structure for storing table-like data in R. 
+
+```{r}
+names_vec <- c("Joe", "Kim", "Jerry", "Mike", "Sue")
+ages_vec <- c(23, 42, 51, 23, 35)
+heights_vec <- c(5.7, 5.1, 5.9, 5.4, 4.9)
+
+people_df <- data.frame(name = names_vec, age = ages_vec, height = heights_vec)
+print(people_df)
+```
+
+We can select rows and/or columns using `[ , ]`-indexing similar to matrices,
+
+```{r}
+print(people_df[c(2, 4, 5), ])  # rows two, four, and five; all columns
+print(people_df[-c(2, 4, 5), ]) # other rows, all columns
+```
+
+and we can extract individual columns like lists.
+
+```{r}
+print(people_df[[2]])   # second column (numeric vector)
+print(people_df$age)    # same (by name)
+```
+
+Be aware that the labels shown along the left-hand side are not row indices, but rather row "names" (initially "1", "2", "3", etc.), which explains why they don't change when we subset the data frame. 
+
+## For-loops
+
+For-loops execute a *block* of code (within `{}`s) for each element of a vector or list.
+
+```{r}
+for(i in 1:4) { # for i in the vector c(1, 2, 3, 4)
+  print("Printing!")
+  print(i)
+}
+
+for(element in datalist) {
+  print("Printing!")
+  print(element)
+}
+```
+
+Some feel that R for-loops are slow; in fact, they aren't too bad. What *is* slow is "growing" a vector (or list) by adding elements on one-at-a-time with a loop.^[Since vectors can't "nest", `c(some_vec, some_other_vec)` results in a concatenated single vector. Indeed, that is what `c` stands for--concatenate.]
+
+```{r}
+answer <- c()   # empty vector
+
+for(i in 1:100) { 
+  # append the log of i to the answer vector -- 
+  # SLOW, particularly when the answer vector grows to the tens of thousands
+  answer <- c(answer, log(i)) 
+}
+
+print(answer)
+```
+
+
+<br />
+<br />
+
+
+## Functions
+
+Functions! They let us encapsulate functionality, taking parameters and returning some answer or value. Here's one that adds its two inputs and returns the result.
+
+```{r}
+add_two_inputs <- function(a, b) {
+  answer <- a + b
+  return(answer)
+}
+
+x <- 4
+y <- 7
+z <- add_two_inputs(x, y)
+print(z)
+```
+
+Functions can have default parameters; here's one that raises the first input to the power of the second, but the default for the power is `2`.^[If you aren't familiar with R, try and figure out what `2 ^ c(3, 4)` will return based on the section above about Vectors, before trying the code.]
+
+```{r}
+raise_to_power <- function(a, pow = 2) {
+  answer <- a ^ pow
+  return(answer)
+}
+
+x <- 3
+p <- 4
+print(raise_to_power(x, pow = p))   # 3 ^ 4
+print(raise_to_power(x))      # 3 ^ 2
+```
+
+There are *many* functions built into R, such as `abs()` (computes absolute value), `t()` (transposes a matrix), `as.data.frame()` (tries to convert its input into a data frame), and so on. To get help for a function like `abs()`, try running `help("abs")` or `?abs`; the help pages are useful as they describe the various parameters functions take, the default values for those parameters, and what is returned by the function. 
+
+<br />
+<br />
+
+## Higher-Order Functions
+
+This section is a bit advanced, but we may run into some of these concepts (if we do, we'll review them at that point as well). Functions are data like any other; consider the result of `print(raise_to_power)`, which reveals that `raise_to_power` is a variable that stores the function code itself:
+
+```{r}
+print(raise_to_power)
+```
+
+This means we can pass functions around as parameters to functions. Here's another function that multiplies two values:
+
+```{r}
+multiply_by <- function(a, b) {
+  answer <- a * b
+  return(answer)
+}
+
+print(multiply_by(3, 4))
+```
+
+Easy enough. Here's a function that takes *three* parameters: two numbers, and a function to call on them:
+
+```{r}
+call_on <- function(a, b, func) {
+  answer <- func(a, b)
+  return(answer)
+}
+```
+
+This lets us use the `call_on` "higher level" function to call one of the two others.
+
+```{r}
+print(call_on(4, 7, raise_to_power))
+print(call_on(4, 7, multiply_by))
+```
+
+R uses higher-level functions quite a bit. For example, we can apply a function to each element of a list, by calling the `lapply()` function giving a list of things to call a function on, and the function to call on each:
+
+```{r}
+sample1 <- rnorm(10, mean = 3, sd = 1)   # length-10 vec, nums sampled from normal dist
+sample2 <- rnorm(10, mean = 5, sd = 1)   # sampled with mean 5
+sample3 <- rnorm(10, mean = 15, sd = 1)  # sampled with mean 15
+
+samples <- list(sample1, sample2, sample3)  # a list containing the three vectors
+
+means <- lapply(samples, mean)              # call the mean function on each element of samples
+```
+
+The result of `lapply()` is a list of the results of the function calls.^[Because building result vectors or lists with for-loops is slow, "functional" approaches such as these are emphasized in R for efficiently performing repeated computations.]
+
+```{r}
+print(means[[1]])
+print(means[[2]])
+print(means[[3]])
+```
+
+Functions can also *return* functions; usually the returned function is defined inside. Here's one that returns a function that prints a message, taking as a parameter the name to greet. 
+
+```{r}
+get_greeting_function <- function(name) {
+  
+  greeting_function <- function() {
+    print(paste("Hello", name, sep = " "))
+  }
+  
+  return(greeting_function)
+}
+```
+
+Notice that the function that is returned takes no parameters - but it refers to the `name` parameter that is passed in to the function that created it. This 'binds' the name for the returned function to whatever was given, and each returned function can have independent bindings.
+
+```{r}
+sayhi1 <- get_greeting_function("Joe")
+sayhi1()
+
+sayhi2 <- get_greeting_function("Jerry")
+sayhi2()
+```
+
+This gets particularly useful when using the "super-assigner" `<<-`, which assigns to variables defined "outside" a particular function. 
+
+```{r}
+create_counter_func <- function() {
+  counter <- 0
+  
+  counter_func <- function() {
+    counter <<- counter + 1
+    return(counter)
+  }
+  
+  return(counter_func)
+}
+```
+
+Here's what will happen: when we call `create_counter_func()` it will create a `counter` variable, and a `counter_func` that can access the counter through binding; whenever the returned function is called, it updates the variable through the binding before returning it. As a result, each call of the returned function returns the next larger integer.
+
+```{r}
+counter1 <- create_counter_func()
+print(counter1()) # returns 1
+print(counter1()) # returns 2
+print(counter1()) # returns 3
+```
+
+Because new counter variables are independently created by `create_counter_func()`, we can have multiple such counter functions:
+
+```{r}
+counter2 <- create_counter_func()
+print(counter2()) # returns 1
+print(counter1()) # returns 4
+print(counter2()) # returns 2
+print(counter1()) # returns 5
+
+```
+
+A function like this, that returns the item in some kind of sequence with each call, is known as a *generator* function. 
+
+<br />
+<br />
+
+## ggplot2
+
+ggplot2 is a popular library for generating plots. If you aren't familiar, know that it has its own specialized syntax for generating plots (it implements a "domain specific language", or DSL), and only plots data present in data frames. 
+
+We'll be mostly using it to plot tiles-plots or heatmaps. Here's what an example dataframe might look like:
+
+```{r}
+df <- data.frame(xloc = c(1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3),
+                 yloc = c(1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4),
+                 val = rnorm(12, mean = 30))
+print(df)
+```
+
+And here's a plot showing these values as a tileplot:
+
+```{r fig.margin=TRUE}
+library(ggplot2)
+ggplot() +
+  # plot a layer with data from the df dataframe
+  geom_tile(data = df,
+            # map column data to what is drawn
+            mapping = aes(x = xloc, y = yloc, fill = val)) + 
+  # don't stretch axes, keep them the same relative size
+  coord_equal() +       
+  # make font size a little bigger
+  theme_gray(18)        
+```
+
+<br />
+<br />
+
+## The `%>%` operator
+
+The `%>%` operator is a powerful tool introduced by the `magrittr` package and utilized by many modern R users and packages, including `keras`. In order to use it most effectively, it helps to understand exactly what it does. 
+
+First, it's not uncommon to run data through a number of different functions. Suppose we have a vector of some numbers,
+
+```{r}
+vals <- c(-3.9, 3.1, 2, 1.4, 7, -4.5, 2.7)
+```
+
+and we want to compute sum of the cubes of the absolute values of the numbers. We could do so with a sequence of calls (intermediate printouts added for clarity).
+
+```{r}
+absolutes <- abs(vals)                  # take absolute values
+print(absolutes)
+cubes <- raise_to_power(absolutes, 3)   # cube each
+print(cubes)
+total <- sum(cubes)                     # compute sum
+print(total)
+```
+
+Alternatively, we could just nest the function calls appropriately.
+
+```{r}
+total <- sum(raise_to_power(abs(vals), 3))
+```
+
+This can quickly become unweildy, particularly when we have secondary arguments to functions as we do here with `raise_to_power()`. The `%>%` operator is made to help with this, but first it helps to understand very simple usage of `%>%`, and then it helps to understand a bit about *associativity*. 
+
+For a basic use of `%>%`, first we need to load the `magrittr` library, or some library that loads it, like `keras`. What the operator does is pass the result of the left hand side *as the first parameter* to the function specified on the right hand side. So, rather than `absolutes <- abs(vals)`, we can
+
+```{r}
+library(keras)
+
+absolutes <- vals %>% abs()
+```
+
+This works even if what is on the left-hand side is the result of a function call, and even if the right-hand side takes secondary arguments. In this line the result of `abs(vals)` is sent as the first argument to `raise_to_power`; any other arguments (here 3) are passed after that first argument.
+
+```{r}
+cubes <- abs(vals) %>% raise_to_power(3) # the 
+```
+
+Now, on to associativity: you are likely familiar with the fact that addition and multiplicaton are *associative*: `a + b + c + d` is the same as `a + (b + (c + d))` which is the same as `((a + b) + c) + d`. 
+
+Some operators, like division, are only *left-associative*; for example, when we say `a / b / c / d` the correct computation is `((a / b) / c) / d`. By contrast, powers are *right-associative*; `a ^ b ^ c ^ d` needs to be computed as `a ^ (b ^ (c ^ d))`. 
+
+Going back to `%>%`, we can chain the usage for our computation. Here's an alternative method of computing it:
+
+```{r}
+total <- vals %>% abs() %>% raise_to_power(3) %>% sum()
+```
+
+It's common to break such long lines:
+
+```{r}
+total <- vals %>%
+  abs() %>%
+  raise_to_power(3) %>%
+  sum()
+
+print(total)
+```
+
+The reason this works so nicely is that `%>%` is emplemented as a left-associative operator! When parenthesized the computation works like
+
+```{r}
+total <- ((vals %>% abs()) %>% raise_to_power(3)) %>% sum()
+```
+
+More succinctly, `a %>% b %>% c %>% d` becomes `((a %>% b) %>% c) %>% d` (where `a`, `b`, `c`, and `d` are actually function calls). Thus, `%>%` always gets the fully computed value for the left side before passing it to the right side, effectively make it read like "`vals`, then `abs()`, then `raise_to_power(3)`, then `sum()`."
+
+The use of `%>%` in R coding has grown rapidly because it makes R code shorter and more readable. 
