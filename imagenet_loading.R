@@ -20,10 +20,10 @@ batch[[2]] %>% tt()
 
 ## generators for validation data
 
-validate_dataget <- image_data_generator(rescale = 1/255)
+validate_datagen <- image_data_generator(rescale = 1/255)
 
 validate_generator <- flow_images_from_directory("datasets/imagenet_validation",
-                                                 train_datagen,
+                                                 validate_datagen,
                                                  target_size = c(100, 100),
                                                  batch_size = 20,
                                                  class_mode = "categorical",
