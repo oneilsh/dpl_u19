@@ -1,5 +1,8 @@
 library(keras)
 library(tensortree)
+library(ggplot2)
+library(tidyr)
+library(dplyr)
 
 # build a dataframe with one column listing the filenames, recursive = TRUE lists everything in all subfolders,
 # include.dirs = FALSE says not to include the directories themselves in the listing
@@ -172,9 +175,65 @@ compile(my_vgg16,
 history <- fit_generator(my_vgg16,
                train_generator,
                steps_per_epoch = 50,   # ~ 3200 (# training examples) / 64 (batch size)
-               epochs = 10,
+               epochs = 20,
                validation_data = validate_generator,
                validation_steps = 12)    # ~ 800 / 64
+
+
+
+#save_model_hdf5(my_vgg16, "my_vgg16_20epochs_80acc.h5")
+# my_vgg16 <- load_model_hdf5("my_vgg16_20epochs_80acc.h5")
+
+filters <- get_layer(vgg16_full, name = "block5_conv1")$output
+
+loss <- k_mean(filters[,,,87]) 
+#loss <- 2*vgg16_full$output[, 636] - k_sum(vgg16_full$output)
+
+#target <- rep(0, 1000)
+#target[636] <- 1
+#loss <- -1*k_categorical_crossentropy(target, vgg16_full$output)
+
+
+# k_gradients always returns a list...
+grads <- k_gradients(loss, vgg16_full$input)[[1]] # k_gradients(loss, my_vgg16$input)[[1]]
+
+# normalize to the l2 norm
+grads <- grads / (k_sqrt(k_mean(k_square(grads))) + 1e-5)
+
+# function that takes an input (for the model$input placeholder),
+# and returns a list of two tensors: the loss, and the gradients 
+iterate <- k_function(list(vgg16_full$input), list(loss, grads))
+
+input_img_data <- array_reshape(runif(224 * 224 * 3, min = 0, max = 1), dim = c(1, 224, 224, 3)) * 20 + 128
+#input_img_data <- array_reshape(rep(0, 224 * 224 * 3), dim = c(1, 224, 224, 3)) + 128
+
+step_size <- 15
+for(i in 1:100) {
+  grads_value <- iterate(list(input_img_data))[[2]]
+  input_img_data <- input_img_data + grads_value * step_size
+}
+
+input_img_data <- (input_img_data - min(input_img_data))/(max(input_img_data) - min(input_img_data))
+
+input_img_data %>% tt() %>%
+  set_ranknames(c("image", "y", "x", "channel")) %>%
+  set_dimnames_for_rank("channel", c("R", "G", "B")) %>%
+  as.data.frame() %>% 
+  spread(channel, value) %>% 
+  ggplot() +
+    geom_tile(aes(x = x, y = y, fill = rgb(R, G, B))) +
+  #facet_wrap(~ channel) +
+    coord_equal() +
+    scale_fill_identity()
+
+
+imagenet_decode_predictions(predict(vgg16_full, input_img_data),
+                            top = 5)
+
+
+
+
+
 
 
 
